@@ -1,0 +1,229 @@
+---
+/**
+ * Videos load only when clicked ("facade" pattern): the page ships a thumbnail
+ * and swaps in the YouTube iframe on tap. That keeps the homepage fast and
+ * stops YouTube from setting cookies on visitors who never press play.
+ *
+ * To feature a video, paste the ID from its URL into src/data/site.ts:
+ *   https://www.youtube.com/watch?v=dQw4w9WgXcQ  →  'dQw4w9WgXcQ'
+ */
+import { youtube, isPlaceholder } from '@data/site';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section section--soft" id="youtube" aria-labelledby="youtube-title">
+  <div class="container">
+    <SectionHead
+      eyebrow="YouTube"
+      title={youtube.heading}
+      lead={youtube.subheading}
+      align="center"
+      id="youtube-title"
+    />
+
+    <ul class="videos">
+      {
+        youtube.videos.map((video, index) => {
+          const ready = !isPlaceholder(video.id);
+          return (
+            <li class="video" data-reveal style={`transition-delay:${index * 80}ms`}>
+              {ready ? (
+                <div class="video__frame" data-video={video.id} data-title={video.title}>
+                  <button class="video__play" type="button">
+                    <img
+                      src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`}
+                      data-fallback={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width="1280"
+                      height="720"
+                    />
+                    <span class="video__badge">
+                      <Icon name="play" size={20} />
+                    </span>
+                    <span class="visually-hidden">Play “{video.title}”</span>
+                  </button>
+                </div>
+              ) : (
+                <a
+                  class="video__frame video__frame--empty"
+                  href={youtube.channelUrl}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="placeholder">
+                    <span>[YouTube Video ID]</span>
+                  </span>
+                </a>
+              )}
+
+              <h3 class="video__title">{video.title}</h3>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <div class="channel card" data-reveal>
+      <span class="channel__icon" aria-hidden="true">
+        <Icon name="youtube" size={26} />
+      </span>
+      <div class="channel__copy">
+        <h3 class="h4">{youtube.channelHandle} on YouTube</h3>
+        <p class="muted">
+          Full sessions, PR attempts, gaming nights and build logs. New videos every week.
+        </p>
+      </div>
+      <a class="btn btn--primary" href={youtube.channelUrl} target="_blank" rel="noopener">
+        Subscribe
+        <Icon name="arrowUpRight" size={17} />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .videos {
+    display: grid;
+    gap: var(--space-m);
+    margin: 0 0 var(--space-m);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 760px) {
+    .videos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .video__frame {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    background: var(--surface-2);
+  }
+
+  .video__frame--empty {
+    text-decoration: none;
+  }
+
+  .video__frame :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video__play {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  .video__play img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .video__play:hover img {
+    transform: scale(1.03);
+  }
+
+  .video__badge {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  .video__badge :global(svg) {
+    width: 64px;
+    height: 64px;
+    padding: 20px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: var(--brand-ink);
+    box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s var(--ease);
+  }
+
+  .video__play:hover .video__badge :global(svg) {
+    transform: scale(1.08);
+  }
+
+  .video__title {
+    margin-top: 0.7rem;
+    font-size: var(--step-0);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+
+  /* Channel card */
+  .channel {
+    display: grid;
+    gap: var(--space-s);
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+    padding: var(--space-l) var(--space-m);
+  }
+
+  .channel__icon {
+    color: #ff0033;
+  }
+
+  .channel__copy p {
+    max-width: 46ch;
+    margin-top: 0.25rem;
+  }
+
+  @media (min-width: 700px) {
+    .channel {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      text-align: left;
+      justify-items: start;
+      gap: var(--space-m);
+    }
+  }
+</style>
+
+<script>
+  // Low-res fallback when a video has no maxres thumbnail.
+  document.querySelectorAll<HTMLImageElement>('img[data-fallback]').forEach((img) => {
+    img.addEventListener(
+      'error',
+      () => {
+        if (img.dataset.fallback) img.src = img.dataset.fallback;
+      },
+      { once: true }
+    );
+  });
+
+  // Swap the thumbnail for the real player on click.
+  document.querySelectorAll<HTMLElement>('[data-video]').forEach((frame) => {
+    frame.querySelector('button')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${frame.dataset.video}?autoplay=1&rel=0`;
+      iframe.title = frame.dataset.title ?? 'YouTube video';
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      frame.replaceChildren(iframe);
+    });
+  });
+</script>

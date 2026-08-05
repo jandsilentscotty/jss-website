@@ -1,0 +1,220 @@
+---
+import { brand, socials } from '@data/site';
+import { withBase } from '@utils/url';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: 'Product',
+    items: [
+      { label: 'iPhone app', href: '/#product' },
+      { label: 'Apple Watch app', href: '/#product' },
+      { label: 'Get the app', href: '/#cta' },
+    ],
+  },
+  {
+    title: 'Company',
+    items: [
+      { label: 'About', href: '/#about' },
+      { label: 'Videos', href: '/#youtube' },
+      { label: 'Contact', href: '/#contact' },
+    ],
+  },
+  {
+    title: 'Legal',
+    items: [
+      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Terms & Conditions', href: '/terms' },
+    ],
+  },
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="logo" href={withBase('/')} aria-label={`${brand.name} — home`}>
+          <span class="logo__mark" aria-hidden="true"><Icon name="bolt" size={17} /></span>
+          <span>{brand.name}</span>
+        </a>
+        <p class="footer__tagline">{brand.tagline}</p>
+        <ul class="socials">
+          {
+            socials.map((social) => (
+              <li>
+                <a
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`${brand.name} on ${social.label}`}
+                  title={social.label}
+                >
+                  <Icon name={social.icon} size={18} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer__cols">
+        {
+          columns.map((column) => (
+            <nav class="footer__col" aria-label={column.title}>
+              <h2 class="footer__col-title">{column.title}</h2>
+              <ul>
+                {column.items.map((item) => (
+                  <li>
+                    <a href={withBase(item.href)}>{item.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© {year} {brand.legalName}. All rights reserved.</p>
+      <p>
+        Apple, the Apple logo, iPhone and Apple Watch are trademarks of Apple Inc.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    background: var(--bg-soft);
+    padding-block: var(--space-xl) var(--space-l);
+    margin-top: auto;
+  }
+
+  .footer__top {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 800px) {
+    .footer__top {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr);
+      gap: var(--space-2xl);
+    }
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-weight: 660;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .logo__mark {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: var(--brand);
+    color: var(--brand-ink);
+  }
+
+  .footer__tagline {
+    margin-top: var(--space-xs);
+    max-width: 30ch;
+    color: var(--text-muted);
+    font-size: var(--step--1);
+  }
+
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: var(--space-m);
+    padding: 0;
+    list-style: none;
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    transition:
+      color 0.15s var(--ease),
+      border-color 0.15s var(--ease),
+      background-color 0.15s var(--ease);
+  }
+
+  .socials a:hover {
+    color: var(--brand-ink);
+    background: var(--brand);
+    border-color: var(--brand);
+  }
+
+  .footer__cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-l) var(--space-m);
+  }
+
+  @media (min-width: 560px) {
+    .footer__cols {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .footer__col-title {
+    font-size: var(--step--1);
+    font-weight: 640;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 0.9rem;
+  }
+
+  .footer__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .footer__col a {
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    text-decoration: none;
+  }
+
+  .footer__col a:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--line);
+    color: var(--text-faint);
+    font-size: 0.8rem;
+  }
+
+  .footer__bottom p {
+    margin: 0;
+  }
+</style>

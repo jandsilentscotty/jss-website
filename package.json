@@ -1,0 +1,21 @@
+{
+  "name": "jss-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing website for the J & Silent Scotty iOS + Apple Watch app.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "og": "node scripts/generate-og.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.1.6"
+  }
+}

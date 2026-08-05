@@ -1,0 +1,175 @@
+---
+import { hero, links, isPlaceholder } from '@data/site';
+import { withBase } from '@utils/url';
+import DeviceFrame from './DeviceFrame.astro';
+import Icon from './Icon.astro';
+
+// Until the TestFlight link exists, the primary CTA scrolls to the signup block.
+const primaryReady = !isPlaceholder(hero.primaryCta.href);
+const primaryHref = primaryReady ? hero.primaryCta.href : withBase('/#cta');
+
+const trust = [
+  { icon: 'phone' as const, label: 'iPhone' },
+  { icon: 'watch' as const, label: 'Apple Watch' },
+  { icon: 'offline' as const, label: 'Works offline' },
+  { icon: 'heart' as const, label: 'Apple Health' },
+];
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__glow" aria-hidden="true"></div>
+
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="pill hero__pill">
+        <span class="pill__dot"></span>
+        {hero.eyebrow}
+      </p>
+
+      <h1 class="h1" id="hero-title">{hero.headline}</h1>
+      <p class="lead hero__lead">{hero.subhead}</p>
+
+      <div class="btn-row hero__actions">
+        <a
+          class="btn btn--primary btn--lg"
+          href={primaryHref}
+          target={primaryReady ? '_blank' : undefined}
+          rel={primaryReady ? 'noopener' : undefined}
+        >
+          {hero.primaryCta.label}
+          <Icon name="arrowRight" size={19} />
+        </a>
+        <a class="btn btn--ghost btn--lg" href={hero.secondaryCta.href}>
+          <Icon name="play" size={16} />
+          {hero.secondaryCta.label}
+        </a>
+      </div>
+
+      <p class="hero__note">{hero.ctaNote}</p>
+
+      <ul class="hero__trust">
+        {
+          trust.map((item) => (
+            <li>
+              <Icon name={item.icon} size={16} />
+              {item.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="hero__visual">
+      <DeviceFrame
+        device="iphone"
+        src={hero.phoneScreenshot}
+        alt="The app's home screen on iPhone"
+        label="[Screenshot: iPhone home]"
+        class="hero__phone"
+        priority
+      />
+      <DeviceFrame
+        device="watch"
+        src={hero.watchScreenshot}
+        alt="An active workout on Apple Watch"
+        label="[Screenshot: Watch]"
+        class="hero__watch"
+        priority
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(3rem, 2rem + 6vw, 6rem) clamp(3.5rem, 2rem + 7vw, 7rem);
+    overflow: hidden;
+  }
+
+  .hero__glow {
+    position: absolute;
+    inset: -30% 0 auto;
+    height: 90%;
+    background: var(--glow);
+    pointer-events: none;
+  }
+
+  .hero__inner {
+    position: relative;
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: var(--space-2xl);
+    }
+  }
+
+  .hero__pill {
+    margin-bottom: var(--space-m);
+  }
+
+  .hero__lead {
+    margin-top: var(--space-m);
+    max-width: 34rem;
+  }
+
+  .hero__actions {
+    margin-top: var(--space-l);
+  }
+
+  .hero__note {
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+    color: var(--text-faint);
+  }
+
+  .hero__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin: var(--space-l) 0 0;
+    padding: var(--space-m) 0 0;
+    border-top: 1px solid var(--line);
+    list-style: none;
+  }
+
+  .hero__trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: var(--step--1);
+    font-weight: 550;
+    color: var(--text-muted);
+  }
+
+  .hero__trust :global(svg) {
+    color: var(--brand-text);
+  }
+
+  /* Device cluster --------------------------------------------------------- */
+  .hero__visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-inline-end: clamp(2.5rem, 12vw, 5rem);
+  }
+
+  .hero__watch {
+    position: absolute;
+    right: 0;
+    bottom: 8%;
+    filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.45));
+  }
+
+  @media (min-width: 960px) {
+    .hero__visual {
+      padding-inline-end: 4rem;
+      justify-content: flex-end;
+    }
+  }
+</style>

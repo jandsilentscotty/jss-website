@@ -1,0 +1,72 @@
+---
+/**
+ * Inline SVG icon set — no icon font, no external requests.
+ * Add a new icon by dropping its inner markup into the ICONS map below.
+ * Stroke icons inherit `currentColor`; brand marks are solid fills.
+ */
+export type IconName = keyof typeof ICONS;
+
+interface Props {
+  name: IconName;
+  size?: number;
+  class?: string;
+  /** Decorative by default. Pass a title to expose it to screen readers. */
+  title?: string;
+}
+
+const { name, size = 20, class: className = '', title } = Astro.props;
+
+const STROKE = 'fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+
+const ICONS = {
+  /* — UI ————————————————————————————————————————————————————————— */
+  check: `<path ${STROKE} d="M20 6 9 17l-5-5"/>`,
+  arrowRight: `<path ${STROKE} d="M5 12h14m-6-7 7 7-7 7"/>`,
+  arrowUpRight: `<path ${STROKE} d="M7 17 17 7M8 7h9v9"/>`,
+  chevronDown: `<path ${STROKE} d="m6 9 6 6 6-6"/>`,
+  menu: `<path ${STROKE} d="M4 7h16M4 12h16M4 17h16"/>`,
+  close: `<path ${STROKE} d="M18 6 6 18M6 6l12 12"/>`,
+  sun: `<circle cx="12" cy="12" r="4" ${STROKE}/><path ${STROKE} d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>`,
+  moon: `<path ${STROKE} d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>`,
+  play: `<path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.53.85l10.2-6.5a1 1 0 0 0 0-1.7L9.53 4.65A1 1 0 0 0 8 5.5Z"/>`,
+  mail: `<rect x="2.5" y="4.5" width="19" height="15" rx="2.5" ${STROKE}/><path ${STROKE} d="m3.5 7 7.4 5.3a2 2 0 0 0 2.2 0L20.5 7"/>`,
+  rss: `<path ${STROKE} d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.6" fill="currentColor" stroke="none"/>`,
+  external: `<path ${STROKE} d="M14 4h6v6M20 4 11 13M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>`,
+
+  /* — Product ———————————————————————————————————————————————————— */
+  bolt: `<path ${STROKE} d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>`,
+  watch: `<rect x="7" y="6" width="10" height="12" rx="3.5" ${STROKE}/><path ${STROKE} d="M9.5 6 9 2.8A1 1 0 0 1 10 2h4a1 1 0 0 1 1 .8L14.5 6m-5 12 .5 3.2a1 1 0 0 0 1 .8h4a1 1 0 0 0 1-.8L15 18"/><path ${STROKE} d="M12 9.6V12l1.6 1"/>`,
+  phone: `<rect x="6" y="2.5" width="12" height="19" rx="3" ${STROKE}/><path ${STROKE} d="M10.5 5.4h3"/>`,
+  chart: `<path ${STROKE} d="M4 20V10m5 10V4m5 16v-7m5 7V8"/>`,
+  timer: `<circle cx="12" cy="13.5" r="7.5" ${STROKE}/><path ${STROKE} d="M12 10v3.6l2.3 1.6M9.5 2h5"/>`,
+  offline: `<path ${STROKE} d="M2 8.8a16 16 0 0 1 20 0M5.5 12.5a11 11 0 0 1 13 0M9 16.2a6 6 0 0 1 6 0"/><circle cx="12" cy="19.6" r="1.2" fill="currentColor" stroke="none"/>`,
+  target: `<circle cx="12" cy="12" r="8.5" ${STROKE}/><circle cx="12" cy="12" r="4" ${STROKE}/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/>`,
+  sparkles: `<path ${STROKE} d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"/><path ${STROKE} d="m18.5 15.5.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/>`,
+  heart: `<path ${STROKE} d="M12 20.3 4.9 13.4a4.4 4.4 0 0 1 0-6.3 4.6 4.6 0 0 1 6.4 0l.7.7.7-.7a4.6 4.6 0 0 1 6.4 0 4.4 4.4 0 0 1 0 6.3L12 20.3Z"/>`,
+  apple: `<path fill="currentColor" d="M16.36 12.72c-.02-2.24 1.83-3.32 1.91-3.37-1.04-1.52-2.66-1.73-3.24-1.76-1.38-.14-2.69.81-3.39.81-.7 0-1.78-.79-2.93-.77-1.5.02-2.9.87-3.67 2.22-1.57 2.72-.4 6.74 1.12 8.94.75 1.08 1.63 2.28 2.79 2.24 1.12-.05 1.54-.72 2.9-.72 1.35 0 1.74.72 2.92.7 1.21-.02 1.97-1.09 2.71-2.18.85-1.25 1.2-2.46 1.22-2.52-.03-.01-2.34-.9-2.36-3.59ZM14.14 5.9c.62-.75 1.03-1.79.92-2.83-.89.04-1.97.59-2.6 1.34-.57.66-1.07 1.72-.94 2.74.99.08 2-.51 2.62-1.25Z"/>`,
+
+  /* — Social ————————————————————————————————————————————————————— */
+  youtube: `<path fill="currentColor" d="M23.5 6.5a3 3 0 0 0-2.12-2.13C19.5 3.86 12 3.86 12 3.86s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12.3 0 12.3s0 3.93.5 5.81a3 3 0 0 0 2.12 2.13c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3 3 0 0 0 2.12-2.13c.5-1.88.5-5.81.5-5.81s0-3.93-.5-5.81ZM9.6 15.88V8.73l6.27 3.58-6.27 3.57Z"/>`,
+  x: `<path fill="currentColor" d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.25 6.93 6.07-6.93Zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.4Z"/>`,
+  instagram: `<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" ${STROKE}/><circle cx="12" cy="12" r="4.6" ${STROKE}/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor" stroke="none"/>`,
+  tiktok: `<path fill="currentColor" d="M16.5 1.5h-3.3v14.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .85.12V9.55a6.3 6.3 0 0 0-.85-.06 6.2 6.2 0 1 0 6.2 6.2V8.4a7.2 7.2 0 0 0 4.2 1.35V6.45a4.05 4.05 0 0 1-4.2-4.05v-.9Z"/>`,
+  threads: `<path fill="currentColor" d="M17.1 11.2a7.4 7.4 0 0 0-.28-.13c-.17-3.06-1.84-4.82-4.65-4.84h-.04c-1.68 0-3.08.72-3.94 2.02l1.55 1.06c.64-.97 1.65-1.18 2.4-1.18h.02c.92.01 1.62.28 2.07.8.33.37.55.89.66 1.54a14.9 14.9 0 0 0-2.66-.13c-2.68.16-4.4 1.72-4.29 3.9.06 1.1.61 2.05 1.55 2.66.79.52 1.81.77 2.87.71 1.4-.08 2.5-.61 3.28-1.58.59-.73.96-1.68 1.13-2.88.68.4 1.18.93 1.46 1.56.47 1.08.5 2.84-.96 4.27-1.27 1.25-2.8 1.79-5.12 1.8-2.57-.02-4.51-.83-5.77-2.4C5.2 16.99 4.6 14.86 4.58 12c.02-2.86.63-4.99 1.8-6.36C7.65 4.07 9.59 3.26 12.16 3.24c2.59.02 4.56.84 5.86 2.43.64.78 1.12 1.76 1.43 2.9l1.8-.48c-.38-1.4-.98-2.62-1.8-3.62C17.87 2.4 15.44 1.4 12.17 1.38h-.01c-3.27.02-5.67 1.03-7.15 3-1.31 1.75-1.99 4.2-2.01 7.6v.02c.02 3.4.7 5.85 2.01 7.6 1.48 1.97 3.88 2.98 7.15 3h.01c2.9-.02 4.95-.77 6.64-2.42 2.21-2.16 2.14-4.87 1.41-6.53-.52-1.2-1.51-2.16-2.87-2.8Zm-4.85 4.66c-1.22.07-2.48-.48-2.54-1.62-.05-.84.6-1.78 2.62-1.9a12 12 0 0 1 1.98.13c-.24 2.9-1.7 3.33-2.06 3.39Z"/>`,
+  coffee: `<path ${STROKE} d="M3.5 8.5h13v6.8a4.5 4.5 0 0 1-4.5 4.5H8a4.5 4.5 0 0 1-4.5-4.5V8.5Z"/><path ${STROKE} d="M16.5 10.5h1.8a2.7 2.7 0 0 1 0 5.4h-1.8M7 2.5v2.3M11 2.5v2.3"/>`,
+} as const;
+
+const inner = ICONS[name];
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  class={className}
+  role={title ? 'img' : undefined}
+  aria-hidden={title ? undefined : 'true'}
+  focusable="false"
+>
+  {title && <title>{title}</title>}
+  <Fragment set:html={inner} />
+</svg>

@@ -1,0 +1,41 @@
+---
+import { positioning } from '@data/site';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+
+const icons = ['target', 'bolt', 'chart'] as const;
+---
+
+<section class="section section--soft" id="who" aria-labelledby="who-title">
+  <div class="container">
+    <SectionHead
+      eyebrow="Who it's for"
+      title={positioning.heading}
+      lead={positioning.subheading}
+      align="center"
+      id="who-title"
+    />
+
+    <ul class="grid grid--3 who__list">
+      {
+        positioning.audience.map((item, index) => (
+          <li class="card card--interactive" data-reveal style={`transition-delay:${index * 70}ms`}>
+            <span class="card__icon">
+              <Icon name={icons[index % icons.length]} size={21} />
+            </span>
+            <h3 class="h4">{item.title}</h3>
+            <p class="muted">{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .who__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

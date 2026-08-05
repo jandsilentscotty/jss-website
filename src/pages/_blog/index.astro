@@ -1,0 +1,158 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Icon from '@components/Icon.astro';
+import { getPublishedPosts } from '@utils/posts';
+import { formatDate } from '@utils/date';
+import { withBase } from '@utils/url';
+import { brand } from '@data/site';
+
+const posts = await getPublishedPosts();
+const [featured, ...rest] = posts;
+---
+
+<BaseLayout
+  title="Blog"
+  description={`Launch notes, build logs and release updates for ${brand.appName} from ${brand.name}.`}
+>
+  <section class="section">
+    <div class="container">
+      <header class="section__head">
+        <p class="eyebrow">Blog</p>
+        <h1 class="h2">Updates &amp; build notes</h1>
+        <p class="lead">
+          Release notes, design decisions and the occasional thing that went wrong. New posts land
+          here first, then go out to the newsletter.
+        </p>
+        <p>
+          <a class="btn btn--ghost btn--sm" href={withBase('/rss.xml')}>
+            <Icon name="rss" size={16} />
+            Subscribe by RSS
+          </a>
+        </p>
+      </header>
+
+      {
+        featured && (
+          <a class="card card--interactive featured" href={withBase(`/blog/${featured.id}`)}>
+            <p class="post__meta">
+              <time datetime={featured.data.pubDate.toISOString()}>
+                {formatDate(featured.data.pubDate)}
+              </time>
+              <span aria-hidden="true">·</span>
+              <span>{featured.data.category}</span>
+            </p>
+            <h2 class="h3">{featured.data.title}</h2>
+            <p class="lead featured__excerpt">{featured.data.description}</p>
+            <span class="post__more">
+              Read post
+              <Icon name="arrowRight" size={16} />
+            </span>
+          </a>
+        )
+      }
+
+      {
+        rest.length > 0 && (
+          <ul class="posts">
+            {rest.map((post) => (
+              <li>
+                <a class="card card--interactive post" href={withBase(`/blog/${post.id}`)}>
+                  <p class="post__meta">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {formatDate(post.data.pubDate)}
+                    </time>
+                    <span aria-hidden="true">·</span>
+                    <span>{post.data.category}</span>
+                  </p>
+                  <h2 class="h4">{post.data.title}</h2>
+                  <p class="muted post__excerpt">{post.data.description}</p>
+                  <span class="post__more">
+                    Read post
+                    <Icon name="arrowRight" size={15} />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      {
+        posts.length === 0 && (
+          <p class="muted">
+            No posts yet. Add a Markdown file to <code>src/content/blog/</code> and it appears here
+            automatically.
+          </p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .featured {
+    display: block;
+    padding: var(--space-l);
+    text-decoration: none;
+    background: var(--bg-soft);
+  }
+
+  .featured__excerpt {
+    max-width: 52ch;
+  }
+
+  .posts {
+    display: grid;
+    gap: var(--space-m);
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 760px) {
+    .posts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .post__excerpt {
+    font-size: var(--step--1);
+    flex: 1;
+  }
+
+  .post__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+    font-weight: 620;
+    color: var(--brand-text);
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--surface-2);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+</style>

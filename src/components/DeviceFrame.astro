@@ -1,0 +1,161 @@
+---
+/**
+ * A CSS-drawn iPhone or Apple Watch shell.
+ *
+ *  • pass `src`  → shows your screenshot
+ *  • pass a slot → renders live HTML inside the screen (used by the demo)
+ *  • pass neither → shows a labelled placeholder, so an unfinished site
+ *    still looks deliberate
+ *
+ * Screenshot sizes that fit perfectly:
+ *   iPhone  1179 × 2556 (or any 9:19.5 image)
+ *   Watch    396 × 484
+ */
+import { withBase } from '@utils/url';
+
+interface Props {
+  device?: 'iphone' | 'watch';
+  src?: string;
+  alt?: string;
+  /** Shown inside the placeholder when there is no screenshot yet. */
+  label?: string;
+  class?: string;
+  /** Loads the image eagerly — use for the hero only. */
+  priority?: boolean;
+}
+
+const {
+  device = 'iphone',
+  src = '',
+  alt = '',
+  label = '[Screenshot]',
+  class: className = '',
+  priority = false,
+} = Astro.props;
+
+const hasSlot = Astro.slots.has('default');
+const hasImage = Boolean(src);
+---
+
+<div class:list={['device', `device--${device}`, className]}>
+  <div class="device__frame">
+    <div class="device__screen">
+      {
+        hasSlot ? (
+          <slot />
+        ) : hasImage ? (
+          <img
+            src={withBase(src)}
+            alt={alt}
+            loading={priority ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ) : (
+          <div class="placeholder">
+            <span>{label}</span>
+            <span class="placeholder__hint">
+              {device === 'watch' ? '396 × 484' : '1179 × 2556'}
+            </span>
+          </div>
+        )
+      }
+    </div>
+    {device === 'iphone' && <div class="device__island" aria-hidden="true"></div>}
+    {device === 'watch' && <div class="device__crown" aria-hidden="true"></div>}
+  </div>
+</div>
+
+<style>
+  .device {
+    --frame: 10px;
+    width: 100%;
+    max-width: var(--device-w, 260px);
+  }
+
+  .device__frame {
+    position: relative;
+    padding: var(--frame);
+    border-radius: var(--frame-radius, 44px);
+    background: linear-gradient(160deg, #3a3f45, #16191c 42%, #24282c);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+      var(--shadow-l);
+  }
+
+  .device__screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: calc(var(--frame-radius, 44px) - var(--frame) + 2px);
+    background: var(--surface-2);
+    aspect-ratio: var(--device-ratio, 9 / 19.5);
+    isolation: isolate;
+  }
+
+  .device__screen :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* iPhone ---------------------------------------------------------------- */
+  .device--iphone {
+    --device-w: 268px;
+    --device-ratio: 9 / 19.5;
+    --frame-radius: 46px;
+  }
+
+  .device__island {
+    position: absolute;
+    top: calc(var(--frame) + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 31%;
+    height: 22px;
+    border-radius: var(--radius-pill);
+    background: #08090a;
+    z-index: 2;
+  }
+
+  /* Apple Watch ----------------------------------------------------------- */
+  .device--watch {
+    --device-w: 172px;
+    --device-ratio: 396 / 484;
+    --frame-radius: 46px;
+    --frame: 8px;
+  }
+
+  .device--watch .device__frame {
+    background: linear-gradient(160deg, #4a4f55, #1b1e21 45%, #2c3034);
+  }
+
+  .device__crown {
+    position: absolute;
+    top: 26%;
+    right: -5px;
+    width: 6px;
+    height: 34px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #5a6067, #2f3438);
+  }
+
+  .device--watch::after {
+    /* Suggestion of a band, so the watch does not float. */
+    content: '';
+    display: block;
+    width: 58%;
+    height: 26px;
+    margin: -6px auto 0;
+    border-radius: 0 0 14px 14px;
+    background: linear-gradient(180deg, #2a2e32, transparent);
+    opacity: 0.65;
+  }
+
+  @media (min-width: 768px) {
+    .device--iphone {
+      --device-w: 292px;
+    }
+    .device--watch {
+      --device-w: 190px;
+    }
+  }
+</style>

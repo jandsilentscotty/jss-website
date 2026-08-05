@@ -1,0 +1,132 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { brand, legal } from '@data/site';
+import { withBase } from '@utils/url';
+---
+
+<BaseLayout
+  title="Terms & Conditions"
+  description={`The terms that apply when you use this website or ${brand.appName}.`}
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <header class="legal-head">
+        <p class="eyebrow">Legal</p>
+        <h1 class="h2">Terms &amp; Conditions</h1>
+        <p class="faint">Effective {legal.effectiveDate}</p>
+      </header>
+
+      <div class="notice">
+        <strong>Template — review before you publish.</strong>
+        These terms are a reasonable starting point for a small indie app, not legal advice. Have
+        them reviewed before you rely on them.
+      </div>
+
+      <div class="prose">
+        <h2>1. Agreement</h2>
+        <p>
+          By using this website or {brand.appName} (the &ldquo;Service&rdquo;), you agree to these
+          terms. If you do not agree, please do not use the Service.
+        </p>
+
+        <h2>2. Licence</h2>
+        <p>
+          {brand.legalName} grants you a personal, non-exclusive, non-transferable, revocable
+          licence to use {brand.appName} on Apple devices you own or control, in line with the
+          Apple Media Services Terms and Conditions. You may not copy, decompile, reverse-engineer
+          or redistribute the app.
+        </p>
+
+        <h2>3. Your content</h2>
+        <p>
+          Your training data belongs to you. We claim no ownership over anything you enter into the
+          app. You are responsible for keeping your own backups; the app relies on your iCloud
+          account for sync and is not a backup service.
+        </p>
+
+        <h2>4. Acceptable use</h2>
+        <ul>
+          <li>Do not use the Service for anything unlawful.</li>
+          <li>Do not attempt to disrupt, probe or overload the Service or its infrastructure.</li>
+          <li>Do not misrepresent your affiliation with {brand.legalName}.</li>
+        </ul>
+
+        <h2>5. Health disclaimer</h2>
+        <p>
+          {brand.appName} is a training log, not a medical device and not a substitute for
+          professional advice. Nothing in the app or on this site is medical, nutritional or
+          coaching advice. Consult a qualified professional before starting or changing a training
+          programme, and stop if you experience pain or injury. You train at your own risk.
+        </p>
+
+        <h2>6. Beta software</h2>
+        <p>
+          Pre-release builds distributed through TestFlight are provided &ldquo;as is&rdquo; and may
+          contain defects, lose data, or change without notice. Do not rely on a beta build as your
+          only record of anything you care about.
+        </p>
+
+        <h2>7. Subscriptions and payment</h2>
+        <p>
+          If and when paid features are offered, purchases are processed by Apple and governed by
+          your App Store account terms. Refunds are handled by Apple, not by us.
+        </p>
+
+        <h2>8. Third-party services</h2>
+        <p>
+          The Service links to third-party platforms such as the App Store, TestFlight and YouTube.
+          We are not responsible for their content, availability or practices.
+        </p>
+
+        <h2>9. Warranty and liability</h2>
+        <p>
+          The Service is provided &ldquo;as is&rdquo; without warranties of any kind, express or
+          implied. To the fullest extent permitted by law, {brand.legalName} is not liable for any
+          indirect, incidental or consequential damages, or for lost data or lost profits arising
+          from your use of the Service.
+        </p>
+
+        <h2>10. Changes</h2>
+        <p>
+          We may update these terms. Material changes will be reflected in the effective date above,
+          and continued use of the Service after a change means you accept the updated terms.
+        </p>
+
+        <h2>11. Governing law</h2>
+        <p>These terms are governed by the laws of {legal.jurisdiction}.</p>
+
+        <h2>12. Contact</h2>
+        <p>
+          Questions about these terms: <a href={`mailto:${brand.email}`}>{brand.email}</a>. See also
+          our <a href={withBase('/privacy')}>Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-head {
+    margin-bottom: var(--space-m);
+  }
+
+  .legal-head > * + * {
+    margin-top: var(--space-2xs);
+  }
+
+  .notice {
+    padding: var(--space-s) var(--space-m);
+    margin-bottom: var(--space-l);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-m);
+    background: var(--bg-soft);
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+
+  .notice strong {
+    display: block;
+    color: var(--text);
+  }
+</style>

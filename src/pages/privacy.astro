@@ -1,0 +1,155 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { brand, legal, links, isPlaceholder } from '@data/site';
+
+const analytics = isPlaceholder(legal.analyticsProvider) ? null : legal.analyticsProvider;
+const newsletter = !isPlaceholder(links.newsletterEndpoint);
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description={`How ${brand.name} handles your data on this website and in ${brand.appName}.`}
+>
+  <section class="section">
+    <div class="container container--narrow">
+      <header class="legal-head">
+        <p class="eyebrow">Legal</p>
+        <h1 class="h2">Privacy Policy</h1>
+        <p class="faint">Effective {legal.effectiveDate}</p>
+      </header>
+
+      <div class="notice">
+        <strong>Template — review before you publish.</strong>
+        This is a starting point written for a small indie app, not legal advice. Have someone
+        qualified check it against how {brand.appName} actually behaves, and against the rules that
+        apply where your users live (GDPR, CCPA, and Apple's App Store requirements).
+      </div>
+
+      <div class="prose">
+        <p>
+          This policy explains what {brand.legalName} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) collects
+          when you use this website or {brand.appName}, why we collect it, and what you can do
+          about it.
+        </p>
+
+        <h2>The short version</h2>
+        <p>
+          {brand.appName} stores your training data on your device and in your own iCloud account.
+          We do not sell personal data, and we do not run advertising.
+        </p>
+
+        <h2>Information the app collects</h2>
+        <ul>
+          <li>
+            <strong>Training data</strong> — workouts, sets, exercises and notes you enter. Stored
+            locally on your device and synced through your private iCloud container. We cannot read
+            it.
+          </li>
+          <li>
+            <strong>Health data</strong> — if you grant permission, the app reads and writes
+            workout data through Apple HealthKit. Health data is never transmitted off your device
+            by us and is never used for advertising.
+          </li>
+          <li>
+            <strong>Diagnostics</strong> — if you opt in to sharing crash reports with Apple, we may
+            see aggregated, anonymised crash logs through App Store Connect.
+          </li>
+        </ul>
+
+        <h2>Information this website collects</h2>
+        <ul>
+          <li>
+            <strong>Analytics</strong> —{' '}
+            {
+              analytics
+                ? `we use ${analytics} to count page views. It is configured without cookies and does not build a profile of you.`
+                : 'we do not run analytics on this site. If that changes, this section will be updated before it does.'
+            }
+          </li>
+          <li>
+            <strong>Newsletter</strong> —{' '}
+            {
+              newsletter
+                ? 'if you subscribe, your email address is stored by our email provider solely to send you product updates. Every email includes an unsubscribe link.'
+                : 'the signup currently opens your email app, so your address only reaches us if you choose to send the message.'
+            }
+          </li>
+          <li>
+            <strong>Contact</strong> — messages you send us, including your email address, so we can
+            reply.
+          </li>
+          <li>
+            <strong>Hosting</strong> — this site is served by GitHub Pages, which records standard
+            server request logs, including IP addresses. See GitHub's own privacy statement for
+            details.
+          </li>
+        </ul>
+
+        <h2>Embedded content</h2>
+        <p>
+          Video thumbnails on this site are static images. A YouTube player only loads after you
+          press play, at which point YouTube may set cookies and receive your IP address under
+          Google's privacy policy. If you never press play, no request goes to YouTube.
+        </p>
+
+        <h2>What we never do</h2>
+        <ul>
+          <li>Sell or rent your personal information.</li>
+          <li>Share your training or health data with third parties.</li>
+          <li>Use tracking pixels or cross-site advertising cookies.</li>
+        </ul>
+
+        <h2>Your rights</h2>
+        <p>
+          You can ask us for a copy of any personal data we hold about you, ask us to correct it, or
+          ask us to delete it. Email <a href={`mailto:${brand.email}`}>{brand.email}</a> and we will
+          respond within 30 days. To delete your training data, delete the app and remove its data
+          from iCloud in iOS Settings.
+        </p>
+
+        <h2>Children</h2>
+        <p>
+          {brand.appName} is not directed at children under 13, and we do not knowingly collect
+          personal information from them.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+          If this policy changes materially, we will update the effective date above and note the
+          change in the app's release notes.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Questions about this policy: <a href={`mailto:${brand.email}`}>{brand.email}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-head {
+    margin-bottom: var(--space-m);
+  }
+
+  .legal-head > * + * {
+    margin-top: var(--space-2xs);
+  }
+
+  .notice {
+    padding: var(--space-s) var(--space-m);
+    margin-bottom: var(--space-l);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-m);
+    background: var(--bg-soft);
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+
+  .notice strong {
+    display: block;
+    color: var(--text);
+  }
+</style>

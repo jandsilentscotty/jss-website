@@ -1,0 +1,99 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '@utils/url';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+import { formatDate } from '@utils/date';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+  posts.length > 0 && (
+    <section class="section section--tight" id="blog" aria-labelledby="blog-title">
+      <div class="container">
+        <SectionHead eyebrow="Updates" title="From the blog" id="blog-title">
+          <a class="btn btn--ghost btn--sm" href={withBase('/blog')}>
+            All posts
+            <Icon name="arrowRight" size={16} />
+          </a>
+        </SectionHead>
+
+        <ul class="posts">
+          {posts.map((post, index) => (
+            <li data-reveal style={`transition-delay:${index * 70}ms`}>
+              <a class="card card--interactive post" href={withBase(`/blog/${post.id}`)}>
+                <p class="post__meta">
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                  <span aria-hidden="true">·</span>
+                  <span>{post.data.category}</span>
+                </p>
+                <h3 class="h4">{post.data.title}</h3>
+                <p class="muted post__excerpt">{post.data.description}</p>
+                <span class="post__more">
+                  Read post
+                  <Icon name="arrowRight" size={15} />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .posts {
+    display: grid;
+    gap: var(--space-m);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 760px) {
+    .posts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .post__excerpt {
+    font-size: var(--step--1);
+    flex: 1;
+  }
+
+  .post__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+    font-weight: 620;
+    color: var(--brand-text);
+  }
+</style>

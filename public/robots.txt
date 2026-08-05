@@ -1,0 +1,5 @@
+# Allow everything. Update the Sitemap line if you move to a custom domain.
+User-agent: *
+Allow: /
+
+Sitemap: https://jandsilentscotty.github.io/JSSWebsite/sitemap-index.xml

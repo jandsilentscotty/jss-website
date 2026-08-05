@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Icon from '@components/Icon.astro';
+import { withBase } from '@utils/url';
+---
+
+<BaseLayout title="Page not found" noindex>
+  <section class="section notfound">
+    <div class="container container--narrow">
+      <p class="eyebrow">404</p>
+      <h1 class="h2">That set does not exist.</h1>
+      <p class="lead">
+        The page you were looking for has moved or never existed. Here is the way back.
+      </p>
+
+      <div class="btn-row">
+        <a class="btn btn--primary" href={withBase('/')}>
+          <Icon name="arrowRight" size={18} />
+          Back to the homepage
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    display: grid;
+    align-items: center;
+    min-height: 60vh;
+  }
+
+  .notfound .btn-row {
+    margin-top: var(--space-l);
+  }
+
+  .notfound .lead {
+    margin-top: var(--space-s);
+    max-width: 42ch;
+  }
+</style>

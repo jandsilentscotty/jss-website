@@ -1,0 +1,98 @@
+---
+/**
+ * App Store + TestFlight buttons that degrade gracefully.
+ * While links.appStore is still "[App Store link]" the badge renders as a
+ * disabled "Coming to the App Store" chip instead of a dead link.
+ */
+import { links, isPlaceholder } from '@data/site';
+import { withBase } from '@utils/url';
+import Icon from './Icon.astro';
+
+interface Props {
+  size?: 'md' | 'lg';
+  align?: 'start' | 'center';
+  /** Show the "no account required" style reassurance line. */
+  note?: string;
+}
+
+const { size = 'md', align = 'start', note } = Astro.props;
+
+const storeReady = !isPlaceholder(links.appStore);
+const flightReady = !isPlaceholder(links.testFlight);
+const btnSize = size === 'lg' ? 'btn--lg' : '';
+---
+
+<div class:list={['store', align === 'center' && 'store--center']}>
+  <div class:list={['btn-row', align === 'center' && 'btn-row--center']}>
+    {
+      storeReady && links.appStoreBadge ? (
+        <a class="badge" href={links.appStore} target="_blank" rel="noopener">
+          <img
+            src={withBase(links.appStoreBadge)}
+            alt="Download on the App Store"
+            height="56"
+            loading="lazy"
+          />
+        </a>
+      ) : (
+        <a
+          class:list={['btn', 'btn--primary', btnSize]}
+          href={storeReady ? links.appStore : undefined}
+          target={storeReady ? '_blank' : undefined}
+          rel={storeReady ? 'noopener' : undefined}
+          aria-disabled={storeReady ? undefined : 'true'}
+        >
+          <Icon name="apple" size={20} />
+          {storeReady ? 'Download on the App Store' : 'Coming to the App Store'}
+        </a>
+      )
+    }
+
+    <a
+      class:list={['btn', 'btn--ghost', btnSize]}
+      href={flightReady ? links.testFlight : '#cta'}
+      target={flightReady ? '_blank' : undefined}
+      rel={flightReady ? 'noopener' : undefined}
+    >
+      <Icon name="sparkles" size={18} />
+      {flightReady ? 'Join the TestFlight beta' : 'Join the beta waitlist'}
+    </a>
+  </div>
+
+  {note && <p class="store__note">{note}</p>}
+</div>
+
+<style>
+  .store {
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  .store--center {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .store__note {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--text-faint);
+  }
+
+  /* Apple's official badge, when one is supplied. */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 10px;
+    transition: transform 0.16s var(--ease);
+  }
+
+  .badge:hover {
+    transform: translateY(-1px);
+  }
+
+  .badge img {
+    height: 56px;
+    width: auto;
+  }
+</style>

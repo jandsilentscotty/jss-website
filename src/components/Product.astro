@@ -1,0 +1,172 @@
+---
+import { products } from '@data/site';
+import SectionHead from './SectionHead.astro';
+import DeviceFrame from './DeviceFrame.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="product" aria-labelledby="product-title">
+  <div class="container">
+    <SectionHead
+      eyebrow="The product"
+      title="Two apps. One training log."
+      lead="Your phone plans the work and reviews the numbers. Your watch does the work with you. They stay in sync without you thinking about it."
+      align="center"
+      id="product-title"
+    />
+
+    <div class="products">
+      {
+        products.map((product, index) => (
+          <article class:list={['product', index % 2 === 1 && 'product--flip']} data-reveal>
+            <div class="product__copy">
+              <p class="product__kicker">
+                <Icon name={product.device === 'watch' ? 'watch' : 'phone'} size={16} />
+                {product.kicker}
+              </p>
+              <h3 class="h3">{product.title}</h3>
+              <p class="muted product__body">{product.body}</p>
+
+              <ul class="checklist">
+                {product.features.map((feature) => (
+                  <li>
+                    <Icon name="check" size={17} />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div
+              class:list={['product__shots', `product__shots--${product.device}`]}
+              role="group"
+              aria-label={`${product.kicker} screenshots`}
+            >
+              {product.screenshots.map((shot, shotIndex) => (
+                <DeviceFrame
+                  device={product.device}
+                  src={shot.src}
+                  alt={`${product.kicker} — ${shot.label.replace(/^\[Screenshot:\s*|\]$/g, '')}`}
+                  label={shot.label}
+                  class={`shot shot--${shotIndex}`}
+                />
+              ))}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .products {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .product {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .product {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--space-2xl);
+    }
+
+    .product--flip .product__copy {
+      order: 2;
+    }
+  }
+
+  .product__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: var(--space-xs);
+    font-size: var(--step--1);
+    font-weight: 640;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brand-text);
+  }
+
+  .product__body {
+    margin-block: var(--space-s) var(--space-m);
+    max-width: 38ch;
+  }
+
+  /* Screenshot cluster ------------------------------------------------------
+     Mobile: a swipeable row that never widens the page.
+     Desktop: overlapping, slightly rotated frames. */
+  .product__shots {
+    display: flex;
+    gap: var(--space-s);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-block: var(--space-xs) var(--space-m);
+    margin-inline: calc(var(--space-m) * -1);
+    padding-inline: var(--space-m);
+    scrollbar-width: none;
+  }
+
+  .product__shots::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product__shots > :global(.shot) {
+    flex: none;
+    scroll-snap-align: center;
+  }
+
+  @media (min-width: 900px) {
+    .product__shots {
+      overflow: visible;
+      justify-content: center;
+      margin-inline: 0;
+      padding-inline: 0;
+      gap: 0;
+    }
+
+    .product__shots > :global(.shot) {
+      transition: transform 0.35s var(--ease);
+    }
+
+    .product__shots--iphone > :global(.shot--0) {
+      transform: rotate(-5deg) translateX(14%) scale(0.92);
+      z-index: 1;
+    }
+
+    .product__shots--iphone > :global(.shot--1) {
+      z-index: 3;
+    }
+
+    .product__shots--iphone > :global(.shot--2) {
+      transform: rotate(5deg) translateX(-14%) scale(0.92);
+      z-index: 2;
+    }
+
+    .product__shots--iphone:hover > :global(.shot--0) {
+      transform: rotate(-7deg) translateX(4%) scale(0.94);
+    }
+
+    .product__shots--iphone:hover > :global(.shot--2) {
+      transform: rotate(7deg) translateX(-4%) scale(0.94);
+    }
+
+    .product__shots--watch {
+      gap: var(--space-m);
+    }
+
+    .product__shots--watch > :global(.shot--0) {
+      transform: rotate(-4deg);
+    }
+
+    .product__shots--watch > :global(.shot--1) {
+      transform: rotate(4deg) translateY(12%);
+    }
+  }
+</style>

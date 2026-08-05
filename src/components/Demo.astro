@@ -1,0 +1,56 @@
+---
+/**
+ * Live, browser-based preview of the app.
+ *
+ * Point `demo.embedUrl` in src/data/site.ts at an Appetize.io session, a screen
+ * recording or a WebContainer build and this section renders it. While that is
+ * empty the section renders nothing at all — better than a "Try it right here"
+ * heading with an empty space underneath it.
+ */
+import { demo, brand } from '@data/site';
+import SectionHead from './SectionHead.astro';
+
+const hasEmbed = Boolean(demo.embedUrl);
+---
+
+{
+  hasEmbed && (
+    <section class="section" id="demo" aria-labelledby="demo-title">
+      <div class="container">
+        <SectionHead
+          eyebrow="Live demo"
+          title={demo.heading}
+          lead={demo.subheading}
+          align="center"
+          id="demo-title"
+        />
+
+        <div class="embed" data-reveal>
+          <iframe
+            src={demo.embedUrl}
+            title={`${brand.appName} interactive demo`}
+            loading="lazy"
+            allow="fullscreen; accelerometer; gyroscope"
+          />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .embed {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .embed iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

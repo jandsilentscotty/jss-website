@@ -1,0 +1,120 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Icon from '@components/Icon.astro';
+import CTASection from '@components/CTASection.astro';
+import { getPublishedPosts } from '@utils/posts';
+import { formatDate } from '@utils/date';
+import { withBase } from '@utils/url';
+
+// `satisfies` (rather than a type annotation) keeps Astro.props inference intact.
+export const getStaticPaths = (async () => {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.heroImage}
+  type="article"
+  publishedAt={post.data.pubDate}
+>
+  <article class="section">
+    <div class="container container--narrow">
+      <a class="back" href={withBase('/blog')}>
+        <Icon name="arrowRight" size={15} class="back__icon" />
+        All posts
+      </a>
+
+      <header class="post-head">
+        <p class="post-head__meta">
+          <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{post.data.category}</span>
+          <span aria-hidden="true">·</span>
+          <span>{post.data.author}</span>
+        </p>
+        <h1 class="h2">{post.data.title}</h1>
+        <p class="lead">{post.data.description}</p>
+        {
+          post.data.updatedDate && (
+            <p class="faint">Updated {formatDate(post.data.updatedDate)}</p>
+          )
+        }
+      </header>
+
+      {
+        post.data.heroImage && (
+          <img
+            class="post-hero"
+            src={withBase(post.data.heroImage)}
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+        )
+      }
+
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <CTASection />
+</BaseLayout>
+
+<style>
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: var(--space-m);
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .back:hover {
+    color: var(--text);
+  }
+
+  .back :global(.back__icon) {
+    transform: rotate(180deg);
+  }
+
+  .post-head {
+    padding-bottom: var(--space-m);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: var(--space-l);
+  }
+
+  .post-head > * + * {
+    margin-top: var(--space-s);
+  }
+
+  .post-head__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .post-hero {
+    width: 100%;
+    border-radius: var(--radius-l);
+    border: 1px solid var(--line);
+    margin-bottom: var(--space-l);
+  }
+</style>

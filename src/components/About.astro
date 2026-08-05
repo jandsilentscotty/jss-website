@@ -1,0 +1,156 @@
+---
+import { about, brand, socials } from '@data/site';
+import { withBase } from '@utils/url';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="container about">
+    <div class="about__media" data-reveal>
+      <div class="about__portrait">
+        {
+          about.photo ? (
+            <img
+              src={withBase(about.photo)}
+              alt={`${about.name}, creator of ${brand.appName}`}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div class="placeholder">
+              <span>[Portrait photo]</span>
+              <span class="placeholder__hint">square, 800 × 800</span>
+            </div>
+          )
+        }
+      </div>
+
+      <ul class="about__facts">
+        {
+          about.facts.map((fact) => (
+            <li>
+              <Icon name="check" size={15} />
+              {fact}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="about__copy">
+      <p class="eyebrow" data-reveal>About</p>
+      <h2 class="h2" id="about-title" data-reveal>{about.heading}</h2>
+
+      <div class="about__prose" data-reveal>
+        {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      <div class="about__sign" data-reveal>
+        <p class="about__name">{about.name}</p>
+        <p class="faint">{about.role}</p>
+      </div>
+
+      <ul class="about__socials" data-reveal>
+        {
+          socials.slice(0, 5).map((social) => (
+            <li>
+              <a href={social.url} target="_blank" rel="noopener" class="pill">
+                <Icon name={social.icon} size={15} />
+                {social.handle}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  @media (min-width: 860px) {
+    .about {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: var(--space-2xl);
+    }
+  }
+
+  .about__portrait {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--surface-2);
+  }
+
+  .about__portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about__facts {
+    display: grid;
+    gap: 0.55rem;
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about__facts li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  .about__facts :global(svg) {
+    color: var(--brand-text);
+    flex: none;
+  }
+
+  .about__prose {
+    margin-top: var(--space-m);
+    display: grid;
+    gap: var(--space-s);
+    color: var(--text-muted);
+    font-size: var(--step-0);
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .about__sign {
+    margin-top: var(--space-m);
+    padding-top: var(--space-s);
+    border-top: 1px solid var(--line);
+  }
+
+  .about__name {
+    font-weight: 660;
+    letter-spacing: -0.02em;
+  }
+
+  .about__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about__socials a {
+    text-decoration: none;
+  }
+
+  .about__socials a:hover {
+    color: var(--text);
+    border-color: var(--line-strong);
+  }
+</style>

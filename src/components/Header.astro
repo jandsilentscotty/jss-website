@@ -1,0 +1,336 @@
+---
+import { brand, nav, links, isPlaceholder } from '@data/site';
+import { withBase } from '@utils/url';
+import Icon from './Icon.astro';
+
+const ctaHref = isPlaceholder(links.testFlight) ? '/#cta' : links.testFlight;
+const ctaExternal = !isPlaceholder(links.testFlight);
+---
+
+<header class="header" id="site-header">
+  <div class="container header__inner">
+    <a class="logo" href={withBase('/')} aria-label={`${brand.name} — home`}>
+      <span class="logo__mark" aria-hidden="true">
+        <Icon name="bolt" size={17} />
+      </span>
+      <span class="logo__text">
+        <span class="logo__full">{brand.name}</span>
+        <span class="logo__short">{brand.shortName}</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <ul class="nav__list">
+        {
+          nav.map((item) => (
+            <li>
+              <a class="nav__link" href={withBase(item.href)}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <button
+        class="icon-btn"
+        type="button"
+        id="theme-toggle"
+        aria-label="Switch colour theme"
+      >
+        <span class="icon-btn__sun"><Icon name="sun" size={18} /></span>
+        <span class="icon-btn__moon"><Icon name="moon" size={18} /></span>
+      </button>
+
+      <a
+        class="btn btn--primary btn--sm header__cta"
+        href={ctaExternal ? ctaHref : withBase(ctaHref)}
+        rel={ctaExternal ? 'noopener' : undefined}
+        target={ctaExternal ? '_blank' : undefined}
+      >
+        Get the app
+      </a>
+
+      <button
+        class="icon-btn nav-toggle"
+        type="button"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open menu"
+      >
+        <span class="nav-toggle__open"><Icon name="menu" size={20} /></span>
+        <span class="nav-toggle__close"><Icon name="close" size={20} /></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" hidden>
+    <ul class="mobile-nav__list">
+      {
+        nav.map((item) => (
+          <li>
+            <a href={withBase(item.href)}>
+              {item.label}
+              <Icon name="arrowUpRight" size={16} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      class="btn btn--primary btn--block"
+      href={ctaExternal ? ctaHref : withBase(ctaHref)}
+      rel={ctaExternal ? 'noopener' : undefined}
+      target={ctaExternal ? '_blank' : undefined}
+    >
+      Get the app
+    </a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s var(--ease);
+  }
+
+  .header.is-stuck {
+    border-bottom-color: var(--line);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    min-height: var(--header-h);
+  }
+
+  /* Logo */
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-weight: 660;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    flex: none;
+  }
+
+  .logo__mark {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: var(--brand);
+    color: var(--brand-ink);
+  }
+
+  .logo__short {
+    display: inline;
+  }
+  .logo__full {
+    display: none;
+  }
+
+  @media (min-width: 480px) {
+    .logo__short {
+      display: none;
+    }
+    .logo__full {
+      display: inline;
+    }
+  }
+
+  /* Desktop nav */
+  .nav {
+    display: none;
+  }
+
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav__link {
+    display: block;
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--radius-pill);
+    font-size: var(--step--1);
+    font-weight: 550;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition:
+      color 0.15s var(--ease),
+      background-color 0.15s var(--ease);
+  }
+
+  .nav__link:hover {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+
+  @media (min-width: 900px) {
+    .nav {
+      display: block;
+    }
+  }
+
+  /* Actions */
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition:
+      color 0.15s var(--ease),
+      border-color 0.15s var(--ease);
+  }
+
+  .icon-btn:hover {
+    color: var(--text);
+    border-color: var(--line-strong);
+  }
+
+  /* Show the theme you would switch *to*: sun while dark, moon while light. */
+  .icon-btn__sun,
+  .icon-btn__moon,
+  .nav-toggle__close {
+    display: none;
+  }
+
+  :global(:root[data-theme='dark']) .icon-btn__sun,
+  :global(:root[data-theme='light']) .icon-btn__moon,
+  :global(:root:not([data-theme])) .icon-btn__sun {
+    display: block;
+  }
+
+  .header__cta {
+    display: none;
+  }
+
+  @media (min-width: 560px) {
+    .header__cta {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .nav-toggle {
+      display: none;
+    }
+  }
+
+  /* Mobile nav panel */
+  .mobile-nav {
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    padding: var(--space-s) var(--space-m) var(--space-m);
+  }
+
+  .mobile-nav[hidden] {
+    display: none;
+  }
+
+  .mobile-nav__list {
+    list-style: none;
+    margin: 0 0 var(--space-s);
+    padding: 0;
+  }
+
+  .mobile-nav__list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 0.2rem;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--step-1);
+    font-weight: 560;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .mobile-nav__list svg {
+    color: var(--text-faint);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle__open {
+    display: none;
+  }
+  .nav-toggle[aria-expanded='true'] .nav-toggle__close {
+    display: block;
+  }
+
+  @media (min-width: 900px) {
+    .mobile-nav {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('site-header');
+  const navToggle = document.getElementById('nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+  const themeToggle = document.getElementById('theme-toggle');
+
+  // Hairline border once the page scrolls away from the top.
+  const onScroll = () => header?.classList.toggle('is-stuck', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Mobile menu.
+  const setNav = (open: boolean) => {
+    navToggle?.setAttribute('aria-expanded', String(open));
+    navToggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (mobileNav) mobileNav.hidden = !open;
+  };
+
+  navToggle?.addEventListener('click', () => {
+    setNav(navToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  mobileNav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setNav(false));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setNav(false);
+  });
+
+  // Theme toggle — the initial theme is applied by the inline script in BaseLayout.
+  themeToggle?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      /* private browsing — the choice just will not persist */
+    }
+  });
+</script>
