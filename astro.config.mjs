@@ -15,7 +15,7 @@ import sitemap from '@astrojs/sitemap';
    is derived from these three values.
    ────────────────────────────────────────────────────────────────────────── */
 const GITHUB_USER = 'jandsilentscotty'; // ← your GitHub username
-const REPO_NAME = 'JSSWebsite'; // ← your repository name
+const REPO_NAME = 'jss-website'; // ← your repository name
 const CUSTOM_DOMAIN = ''; // ← e.g. 'jandsilentscotty.com' (leave '' if none)
 
 const isUserSite = REPO_NAME.toLowerCase() === `${GITHUB_USER.toLowerCase()}.github.io`;
