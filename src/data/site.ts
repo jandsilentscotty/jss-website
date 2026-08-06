@@ -19,9 +19,9 @@ export const brand = {
   /** Short form used in tight spaces (mobile header, favicon-adjacent marks). */
   shortName: 'J&SS',
   /** The app this site is selling. */
-  appName: '[App Name]',
+  appName: 'RepBud',
   /** Six words max. Sits under the logo in the footer. */
-  tagline: '[App Tagline — six words max]',
+  tagline: 'Say the set. It is logged.',
   /** Used for the copyright line and legal pages. */
   legalName: '[Company/Legal Name]',
   email: 'jandsilentscotty@gmail.com',
@@ -31,10 +31,10 @@ export const brand = {
 
 export const seo = {
   /** ~55 chars. Shown in the browser tab and as the Google result headline. */
-  defaultTitle: `${brand.appName} — Train harder, track less`,
+  defaultTitle: `${brand.appName} — Log every set by voice`,
   /** 150–160 chars. This is your Google search snippet. Make it a sales line. */
   defaultDescription:
-    '[App Name] is the iOS and Apple Watch training app for lifters who want every set logged in one tap — so you can focus on the work, not the paperwork.',
+    'RepBud is the iPhone and Apple Watch training log you can talk to. Say “185 for 8” between sets and it is logged — on device, no typing, no phone juggling.',
   /** Social preview image (1200×630). Regenerate with: npm run og */
   ogImage: '/images/og-image.png',
   /** Twitter/X handle for the summary card attribution. */
@@ -53,8 +53,6 @@ export const links = {
    *  save it as public/images/badges/app-store.svg, then set the path here.
    *  Leave '' to use the built-in styled button instead. */
   appStoreBadge: '',
-  /** Public TestFlight invite link. */
-  testFlight: '[TestFlight link]',
   /** Newsletter form endpoint (Buttondown / Mailchimp / ConvertKit / Formspree).
    *  Leave as the placeholder and the form becomes a prefilled email link. */
   newsletterEndpoint: '[Newsletter endpoint]',
@@ -107,6 +105,7 @@ export const socials = [
 
 export const nav = [
   { label: 'Product', href: '/#product' },
+  { label: 'Voice', href: '/#voice' },
   { label: 'Videos', href: '/#youtube' },
   { label: 'About', href: '/#about' },
 ] as const;
@@ -115,19 +114,17 @@ export const nav = [
 
 export const hero = {
   /** Small pill above the headline. Great spot for launch status. */
-  eyebrow: 'Now in TestFlight',
+  eyebrow: 'Coming to the App Store',
   /** ONE sentence. What it is, who it's for. Not a slogan — a statement. */
-  headline: 'The training log that keeps up with your workout.',
+  headline: 'Say the set. RepBud logs it.',
   /** 1–2 sentences. Name the person and the problem you remove. */
   subhead:
-    'Built for lifters who are tired of fighting their phone between sets. [App Name] logs every set from your wrist, remembers what you lifted last time, and gets out of the way.',
-  primaryCta: { label: 'Join the TestFlight', href: links.testFlight },
-  secondaryCta: { label: 'See it in action', href: '#product' },
+    'RepBud is a strength training log for iPhone and Apple Watch. Say “185 for 8” between sets and it lands on the right exercise — weight, reps, time or distance, all transcribed on your device.',
   /** Small reassurance line under the buttons. */
-  ctaNote: 'Free while in beta · iPhone + Apple Watch · No account required',
+  ctaNote: 'iPhone + Apple Watch · Free to start · RepBud Pro unlocks the deep analytics',
   /** Hero screenshots. Empty string → labelled placeholder frame. */
-  phoneScreenshot: '',
-  watchScreenshot: '',
+  phoneScreenshot: '/images/screenshots/ios-home.png',
+  watchScreenshot: '/images/screenshots/watch-active-set.png',
 } as const;
 
 /* ─── 6. POSITIONING — who it's for, what it fixes ──────────────────────── */
@@ -138,16 +135,16 @@ export const positioning = {
     'Not a habit tracker. Not a social network. A training log for people who actually train.',
   audience: [
     {
-      title: 'You lift 3–6 days a week',
-      body: 'Progressive overload only works if you remember last week. [App Name] surfaces your previous numbers before you touch the bar.',
+      title: 'You hate typing between sets',
+      body: 'Tap the mic, say the set, put the phone down. RepBud understands your workout details, converts measurements when needed, and lets you quickly undo a mistake if it hears you incorrectly.',
     },
     {
-      title: 'You hate typing between sets',
-      body: 'Logging a set is one tap on your wrist. Your phone can stay in your bag for the entire session.',
+      title: 'You lift 3–6 days a week',
+      body: 'Save your split as routines, then start one in a tap. The session runs full screen with a rest timer, and minimises to a card when you need the rest of your phone.',
     },
     {
       title: 'You want proof it is working',
-      body: 'Volume, PRs and streaks roll up automatically. No spreadsheets, no manual charting, no export ritual.',
+      body: 'Volume, frequency, progression, muscle split, duration, streaks and personal records are charted from the sets you already logged. No spreadsheet, no export ritual.',
     },
   ],
 } as const;
@@ -158,39 +155,65 @@ export const products = [
   {
     id: 'ios',
     kicker: 'iPhone',
-    title: 'Plan the session. Review the progress.',
-    body: 'The iPhone app is where you build routines, dig into history and see the trend lines that tell you whether the block is working.',
+    title: 'Log the session. Then see what changed.',
+    body: 'The iPhone app guides your workout and saves every set. You can search your history by month and view your progress in seven charts.',
     device: 'iphone' as const,
     /** Up to 3 — they become the phone frames in this block. */
     screenshots: [
-      { src: '', label: '[Screenshot: Home / Today]' },
-      { src: '', label: '[Screenshot: Workout detail]' },
-      { src: '', label: '[Screenshot: Progress charts]' },
+      { src: '/images/screenshots/ios-active-workout.png', label: '[Screenshot: Active workout]' },
+      { src: '/images/screenshots/ios-analytics.png', label: '[Screenshot: Training charts]' },
+      { src: '/images/screenshots/ios-logs.png', label: '[Screenshot: Workout log]' },
     ],
     features: [
-      'Build routines once, reuse them forever',
-      'Full lift history with per-exercise trends',
-      'Apple Health sync, on your terms',
+      'Voice, or type — strength, bodyweight, timed and cardio sets',
+      'Reusable routines, a rest timer and a session you can minimise',
+      'Every workout kept in a searchable, month-grouped log',
+      'Hall of Fame for your heaviest weight, most reps and best volume',
+      'Apple Health sync, Siri Shortcuts and CSV export',
     ],
   },
   {
     id: 'watch',
     kicker: 'Apple Watch',
-    title: 'The whole workout, from your wrist.',
-    body: 'The Watch app is the point. Start, log, rest and finish without ever unlocking your phone — and it keeps working when the signal does not.',
+    title: 'The whole session, from your wrist.',
+    body: 'The Watch app tracks the workout natively, with no phone needed on the gym floor — and it does not care whether you have signal.',
     device: 'watch' as const,
     screenshots: [
-      { src: '', label: '[Screenshot: Watch — active set]' },
-      { src: '', label: '[Screenshot: Watch — rest timer]' },
+      { src: '/images/screenshots/watch-active-set.png', label: '[Screenshot: Watch — active set]' },
+      { src: '/images/screenshots/watch-voice.png', label: '[Screenshot: Watch — voice logging]' },
+      { src: '/images/screenshots/watch-rest-timer.png', label: '[Screenshot: Watch — rest timer]' },
     ],
     features: [
-      'One-tap set logging with the Digital Crown',
-      'Rest timer with a haptic tap when time is up',
-      'Works fully offline, syncs when you are back',
-      'Complication puts today’s session one tap away',
+      'Native watchOS workout tracking, not a mirrored screen',
+      'Say the set from your wrist — the phone can stay in your bag',
+      'A rest timer you start and pause without looking for your phone',
+      'Sets queue up offline and sync themselves when you are back',
+      'Your log stays identical on both devices',
     ],
   },
 ] as const;
+
+/* ─── 7b. VOICE LOGGING — the headline feature ──────────────────────────── */
+
+export const voice = {
+  heading: 'Say the set. Keep your hands on the bar.',
+  subheading:
+    'Tap the mic on any exercise and talk to RepBud the way you would talk to a training partner. Speech is transcribed on your device — nothing is shipped off to a server to be understood.',
+  /** Real phrasings the parser understands. */
+  phrases: [
+    { said: '“185 for 8”', logged: '185 lbs × 8 reps' },
+    { said: '“forty five seconds”', logged: '0:45 on a timed set' },
+  ],
+  /** `icon` is an Icon name — see src/components/Icon.astro. */
+  points: [
+    {
+      icon: 'undo',
+      title: 'It is undoable',
+      body: 'Every dictated set arrives with an undo toast. Misheard numbers are one tap away from gone.',
+    },
+  ],
+  screenshot: '/images/screenshots/ios-active-workout.png',
+} as const;
 
 /* ─── 8. LIVE DEMO ──────────────────────────────────────────────────────── */
 
@@ -204,93 +227,49 @@ export const demo = {
   note: 'Interactive preview · Replace with a live Appetize.io embed or screen recording when ready',
 } as const;
 
-/* ─── 9. PROOF ──────────────────────────────────────────────────────────── */
-
-export const proof = {
-  heading: 'Early users, early numbers',
-  subheading: 'Swap these for real quotes and metrics as soon as you have them.',
-  stats: [
-    { value: '[Stat]', label: 'Beta testers' },
-    { value: '[Stat]', label: 'Workouts logged' },
-    { value: '[Stat]', label: 'Average rating' },
-    { value: '[Stat]', label: 'Weeks in development' },
-  ],
-  testimonials: [
-    {
-      quote:
-        '[Testimonial quote — one specific thing the app changed about their training. Specific beats glowing.]',
-      name: '[Reviewer Name]',
-      role: '[Role / how they train]',
-      avatar: '',
-    },
-    {
-      quote:
-        '[Testimonial quote — ideally mentions the Watch app, since that is the differentiator.]',
-      name: '[Reviewer Name]',
-      role: '[Role / how they train]',
-      avatar: '',
-    },
-    {
-      quote: '[Testimonial quote — from someone who switched from a spreadsheet or a competitor.]',
-      name: '[Reviewer Name]',
-      role: '[Role / how they train]',
-      avatar: '',
-    },
-  ],
-} as const;
-
-/* ─── 10. ABOUT ─────────────────────────────────────────────────────────── */
+/* ─── 9. ABOUT ──────────────────────────────────────────────────────────── */
 
 export const about = {
   heading: 'Why I built this',
-  name: '[Your Name]',
-  role: '[Your Role — e.g. Indie iOS developer & lifter]',
-  photo: '', // e.g. '/images/portrait.jpg'
+  name: 'J',
+  role: 'One half of J & Silent Scotty',
+  photo: '/images/portrait.jpg',
   /** Each string is its own paragraph. */
   paragraphs: [
-    'I am [Your Name] — one half of J & Silent Scotty, where we document the grind in the gym and on the leaderboards. [Add a sentence about your background: what you do, how long you have been building, what you trained for.]',
-    'I built [App Name] because [describe the specific moment the idea landed — the set you forgot, the spreadsheet that broke, the app that wanted a subscription before it would show you your own data].',
-    'It is built by one person who uses it every session. That means it stays small, it stays fast, and every feature has to earn its place. [Add anything about your roadmap or philosophy here.]',
+    'I’m J. One half of J and Silent Scotty, where motivation meets the journey. We create engaging workout vlogs to inspire you to chase your next personal best, whether you’re training in the gym, working out at home, or just getting started.',
+    'Along the way, we openly share our fitness plans, training routines, evolving goals, and the everyday work behind getting stronger. We built RepBud to make that journey easier to track.',
+    'Logging a workout should not interrupt it. RepBud lets you record a set quickly by voice, so you can stay focused and keep moving instead of stopping to type everything into a spreadsheet or search through a complicated app. Its simple statistics also help you see your progress, recognize your growth, and stay motivated toward your next goal.',
+    'RepBud is built by one person who uses it every session. That keeps it focused, fast, and practical. Every feature has to earn its place by making training easier to log and progress easier to understand.',
+    'We believe fitness is a journey best taken together. When we’re not lifting, you can find us unwinding with some chill gaming content, but wherever we are, RepBud helps us keep showing up, tracking the work, and moving forward.',
   ],
   /** Short credibility bullets. Keep them concrete. */
-  facts: [
-    '[Years] years training',
-    '[Number] subscribers on YouTube',
-    'Built solo in Swift & SwiftUI',
-    'Based in [Location]',
-  ],
+  facts: ['100 subscribers on YouTube'],
 } as const;
 
-/* ─── 11. YOUTUBE ───────────────────────────────────────────────────────── */
+/* ─── 10. YOUTUBE ───────────────────────────────────────────────────────── */
 /* Get an ID from the watch URL: youtube.com/watch?v=THIS_PART_HERE          */
+/* Optional `start` jumps the player to that many seconds in (the &t= value). */
 
 export const youtube = {
   heading: 'Watch the build',
   subheading:
-    'Training sessions, gaming nights and the occasional look behind the scenes of building [App Name].',
+    'Training sessions, gaming nights and the occasional look behind the scenes of building RepBud.',
   channelUrl: 'https://www.youtube.com/@JnSilentScotty?sub_confirmation=1',
   channelHandle: '@JnSilentScotty',
   videos: [
-    { id: '[YouTube Video ID]', title: '[Video title — e.g. Building the Watch app in a weekend]' },
-    { id: '[YouTube Video ID]', title: '[Video title — e.g. Full push day, logged entirely on Watch]' },
+    {
+      id: '01s2mGlsuMQ',
+      title: 'CYCLE 5 ENDS HERE. | Solo Squat Reset & Form Check (D4W4C5 157/365)',
+    },
+    {
+      id: 'EUoqtxnNJ1Y',
+      title: 'EP. 1 WE FINALLY STARTED! | J & SilentScotty Hit the Gym (D1W1C1 Overhead Press 1/365)',
+      start: 314,
+    },
   ],
 } as const;
 
-/* ─── 12. FINAL CTA ─────────────────────────────────────────────────────── */
-
-export const cta = {
-  heading: 'Get [App Name] on your wrist',
-  subheading:
-    'The beta is open and the roadmap is public. Join now and help decide what gets built next.',
-  newsletter: {
-    heading: 'Launch updates, once a month',
-    body: 'One email when the app ships, and short notes on what changed. No spam, unsubscribe any time.',
-    buttonLabel: 'Subscribe',
-    placeholder: 'you@example.com',
-  },
-} as const;
-
-/* ─── 13. CONTACT ───────────────────────────────────────────────────────── */
+/* ─── 11. CONTACT ───────────────────────────────────────────────────────── */
 
 export const contact = {
   heading: 'Get in touch',
@@ -299,7 +278,7 @@ export const contact = {
   responseTime: 'Usually replies within [2 business days]',
 } as const;
 
-/* ─── 14. LEGAL ─────────────────────────────────────────────────────────── */
+/* ─── 12. LEGAL ─────────────────────────────────────────────────────────── */
 
 export const legal = {
   effectiveDate: '[Effective Date]',

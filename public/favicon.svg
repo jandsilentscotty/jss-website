@@ -1,4 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="15" fill="#c6f24e"/>
-  <path d="M36.5 8 20 32.8h13.2l-2.4 23.2 18-27.4H35.3L36.5 8Z" fill="#0b1002"/>
+  <style>
+    /* Mirrors the app icon: dark tile by default, light tile in light UI. */
+    .tile { fill: #101416; }
+    .disc { fill: #0b0f11; }
+    .trace { stroke: #9fd797; }
+    @media (prefers-color-scheme: light) {
+      .tile { fill: #fafcff; }
+      .disc { fill: #2d3134; }
+      .trace { stroke: #8fce88; }
+    }
+  </style>
+  <rect class="tile" width="64" height="64" rx="15"/>
+  <circle class="disc" cx="32" cy="32" r="19"/>
+  <path class="trace" d="M2 32h10l2.5-5 2.5 9 2-4h3l4-20 4.5 36 4.5-28 2.5 12 2.5-5 2 5h20"
+        fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

@@ -6,10 +6,16 @@
  *
  * To feature a video, paste the ID from its URL into src/data/site.ts:
  *   https://www.youtube.com/watch?v=dQw4w9WgXcQ  →  'dQw4w9WgXcQ'
+ * A `start` value there (the &t= seconds) is passed through to the player.
  */
 import { youtube, isPlaceholder } from '@data/site';
 import SectionHead from './SectionHead.astro';
 import Icon from './Icon.astro';
+
+const videos = youtube.videos.map((video) => ({
+  ...video,
+  start: 'start' in video ? video.start : undefined,
+}));
 ---
 
 <section class="section section--soft" id="youtube" aria-labelledby="youtube-title">
@@ -24,12 +30,17 @@ import Icon from './Icon.astro';
 
     <ul class="videos">
       {
-        youtube.videos.map((video, index) => {
+        videos.map((video, index) => {
           const ready = !isPlaceholder(video.id);
           return (
             <li class="video" data-reveal style={`transition-delay:${index * 80}ms`}>
               {ready ? (
-                <div class="video__frame" data-video={video.id} data-title={video.title}>
+                <div
+                  class="video__frame"
+                  data-video={video.id}
+                  data-title={video.title}
+                  data-start={video.start}
+                >
                   <button class="video__play" type="button">
                     <img
                       src={`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`}
@@ -203,22 +214,30 @@ import Icon from './Icon.astro';
 </style>
 
 <script>
-  // Low-res fallback when a video has no maxres thumbnail.
+  // Low-res fallback when a video has no maxres thumbnail. YouTube answers a
+  // missing one with a 120×90 grey placeholder instead of a network error, so
+  // the decoded size has to be checked as well as the error event.
+  const useFallback = (img: HTMLImageElement) => {
+    if (!img.dataset.fallback) return;
+    img.src = img.dataset.fallback;
+    delete img.dataset.fallback;
+  };
+
   document.querySelectorAll<HTMLImageElement>('img[data-fallback]').forEach((img) => {
-    img.addEventListener(
-      'error',
-      () => {
-        if (img.dataset.fallback) img.src = img.dataset.fallback;
-      },
-      { once: true }
-    );
+    const checkSize = () => {
+      if (img.naturalWidth > 0 && img.naturalWidth <= 120) useFallback(img);
+    };
+    img.addEventListener('error', () => useFallback(img), { once: true });
+    img.addEventListener('load', checkSize, { once: true });
+    if (img.complete) checkSize();
   });
 
   // Swap the thumbnail for the real player on click.
   document.querySelectorAll<HTMLElement>('[data-video]').forEach((frame) => {
     frame.querySelector('button')?.addEventListener('click', () => {
+      const start = frame.dataset.start ? `&start=${frame.dataset.start}` : '';
       const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${frame.dataset.video}?autoplay=1&rel=0`;
+      iframe.src = `https://www.youtube-nocookie.com/embed/${frame.dataset.video}?autoplay=1&rel=0${start}`;
       iframe.title = frame.dataset.title ?? 'YouTube video';
       iframe.allow =
         'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';

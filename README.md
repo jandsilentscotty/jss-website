@@ -37,9 +37,9 @@ npm run og        # regenerate the social preview image + touch icon
     ├── layouts/BaseLayout.astro
     ├── components/
     │   ├── BaseHead.astro    ← every meta tag, OG tag and JSON-LD block
-    │   ├── Header · Footer · Icon · SectionHead · DeviceFrame · StoreButtons
-    │   └── Hero · Positioning · Product · Demo · Proof · About
-    │       · YouTubeSection · BlogTeaser · CTASection · Contact
+    │   ├── Header · Footer · Logo · Icon · SectionHead · DeviceFrame
+    │   └── Hero · Positioning · Voice · Product · Demo · About
+    │       · YouTubeSection · BlogTeaser · StoreButtons · Contact
     └── pages/
         ├── index.astro       ← composes the homepage sections in order
         ├── blog/index.astro · blog/[...slug].astro

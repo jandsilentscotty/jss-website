@@ -1,5 +1,5 @@
 ---
-title: 'Why I am building [App Name]'
+title: 'Why I am building RepBud'
 description: 'The spreadsheet finally broke. Here is what I decided to build instead, and who it is for.'
 pubDate: 2026-01-15
 category: 'Launch notes'
@@ -25,7 +25,7 @@ What I wanted was narrow:
 - Let me log a set without taking my phone out of my bag
 - Add up the volume so I do not have to
 
-That is the whole product. [App Name] does those three things and tries very hard not to do a
+That is the whole product. RepBud does those three things and tries very hard not to do a
 fourth.
 
 ## Who it is not for
@@ -36,9 +36,9 @@ doing and want the logging to disappear, keep reading this blog.
 
 ## What is next
 
-- [ ] TestFlight build [Number] — rest timer haptics
+- [ ] Voice logging on Apple Watch
 - [ ] Apple Health write-back
 - [ ] Exercise library import
 
 Follow along on [YouTube](https://www.youtube.com/@JnSilentScotty) where I record the build
-sessions, or [subscribe to updates](/#cta) and I will email you when it ships.
+sessions, or [get in touch](/#contact) and I will email you when it ships.

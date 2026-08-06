@@ -2,17 +2,19 @@
 import { brand, nav, links, isPlaceholder } from '@data/site';
 import { withBase } from '@utils/url';
 import Icon from './Icon.astro';
+import Logo from './Logo.astro';
 
-const ctaHref = isPlaceholder(links.testFlight) ? '/#cta' : links.testFlight;
-const ctaExternal = !isPlaceholder(links.testFlight);
+// Until the App Store listing is live, "Get the app" scrolls to the contact form.
+const storeReady = !isPlaceholder(links.appStore);
+const ctaHref = storeReady ? links.appStore : '/#contact';
+const ctaExternal = storeReady;
+const ctaLabel = storeReady ? 'Get the app' : 'Get notified';
 ---
 
 <header class="header" id="site-header">
   <div class="container header__inner">
     <a class="logo" href={withBase('/')} aria-label={`${brand.name} — home`}>
-      <span class="logo__mark" aria-hidden="true">
-        <Icon name="bolt" size={17} />
-      </span>
+      <Logo size={30} />
       <span class="logo__text">
         <span class="logo__full">{brand.name}</span>
         <span class="logo__short">{brand.shortName}</span>
@@ -50,7 +52,7 @@ const ctaExternal = !isPlaceholder(links.testFlight);
         rel={ctaExternal ? 'noopener' : undefined}
         target={ctaExternal ? '_blank' : undefined}
       >
-        Get the app
+        {ctaLabel}
       </a>
 
       <button
@@ -86,7 +88,7 @@ const ctaExternal = !isPlaceholder(links.testFlight);
       rel={ctaExternal ? 'noopener' : undefined}
       target={ctaExternal ? '_blank' : undefined}
     >
-      Get the app
+      {ctaLabel}
     </a>
   </div>
 </header>
@@ -123,16 +125,6 @@ const ctaExternal = !isPlaceholder(links.testFlight);
     letter-spacing: -0.02em;
     text-decoration: none;
     flex: none;
-  }
-
-  .logo__mark {
-    display: grid;
-    place-items: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 9px;
-    background: var(--brand);
-    color: var(--brand-ink);
   }
 
   .logo__short {

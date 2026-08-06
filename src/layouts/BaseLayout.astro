@@ -3,6 +3,9 @@ import BaseHead from '@components/BaseHead.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import { seo } from '@data/site';
+// Self-hosted so there is no third-party font request on any page load.
+import '@fontsource-variable/hanken-grotesk';
+import '@fontsource-variable/jetbrains-mono';
 import '@styles/global.css';
 
 interface Props {

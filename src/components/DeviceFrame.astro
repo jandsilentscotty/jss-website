@@ -9,7 +9,7 @@
  *
  * Screenshot sizes that fit perfectly:
  *   iPhone  1179 × 2556 (or any 9:19.5 image)
- *   Watch    396 × 484
+ *   Watch    416 × 496 (Series 10 / Ultra 46mm)
  */
 import { withBase } from '@utils/url';
 
@@ -54,13 +54,14 @@ const hasImage = Boolean(src);
           <div class="placeholder">
             <span>{label}</span>
             <span class="placeholder__hint">
-              {device === 'watch' ? '396 × 484' : '1179 × 2556'}
+              {device === 'watch' ? '416 × 496' : '1179 × 2556'}
             </span>
           </div>
         )
       }
     </div>
-    {device === 'iphone' && <div class="device__island" aria-hidden="true"></div>}
+    {/* Real screenshots already include the island — only draw one for mocks. */}
+    {device === 'iphone' && !hasImage && <div class="device__island" aria-hidden="true"></div>}
     {device === 'watch' && <div class="device__crown" aria-hidden="true"></div>}
   </div>
 </div>
@@ -112,14 +113,14 @@ const hasImage = Boolean(src);
     width: 31%;
     height: 22px;
     border-radius: var(--radius-pill);
-    background: #08090a;
+    background: #0b0f11;
     z-index: 2;
   }
 
   /* Apple Watch ----------------------------------------------------------- */
   .device--watch {
     --device-w: 172px;
-    --device-ratio: 396 / 484;
+    --device-ratio: 416 / 496;
     --frame-radius: 46px;
     --frame: 8px;
   }
