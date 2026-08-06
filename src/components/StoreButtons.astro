@@ -1,8 +1,9 @@
 ---
 /**
- * App Store + TestFlight buttons that degrade gracefully.
+ * App Store buttons that degrade gracefully.
  * While links.appStore is still "[App Store link]" the badge renders as a
- * disabled "Coming to the App Store" chip instead of a dead link.
+ * disabled "Coming to the App Store" chip instead of a dead link, and a second
+ * button points at the contact form so the visit is still worth something.
  */
 import { links, isPlaceholder } from '@data/site';
 import { withBase } from '@utils/url';
@@ -11,14 +12,13 @@ import Icon from './Icon.astro';
 interface Props {
   size?: 'md' | 'lg';
   align?: 'start' | 'center';
-  /** Show the "no account required" style reassurance line. */
+  /** Small reassurance line under the buttons. */
   note?: string;
 }
 
 const { size = 'md', align = 'start', note } = Astro.props;
 
 const storeReady = !isPlaceholder(links.appStore);
-const flightReady = !isPlaceholder(links.testFlight);
 const btnSize = size === 'lg' ? 'btn--lg' : '';
 ---
 
@@ -48,14 +48,9 @@ const btnSize = size === 'lg' ? 'btn--lg' : '';
       )
     }
 
-    <a
-      class:list={['btn', 'btn--ghost', btnSize]}
-      href={flightReady ? links.testFlight : '#cta'}
-      target={flightReady ? '_blank' : undefined}
-      rel={flightReady ? 'noopener' : undefined}
-    >
-      <Icon name="sparkles" size={18} />
-      {flightReady ? 'Join the TestFlight beta' : 'Join the beta waitlist'}
+    <a class:list={['btn', 'btn--ghost', btnSize]} href={storeReady ? '#product' : '#contact'}>
+      <Icon name={storeReady ? 'play' : 'mail'} size={18} />
+      {storeReady ? 'See how it works' : 'Tell me when it launches'}
     </a>
   </div>
 

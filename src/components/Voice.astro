@@ -1,0 +1,163 @@
+---
+/**
+ * The headline feature: dictating a set instead of typing it.
+ * Copy and the example phrases live in `voice` in src/data/site.ts.
+ */
+import { voice } from '@data/site';
+import SectionHead from './SectionHead.astro';
+import DeviceFrame from './DeviceFrame.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section section--soft" id="voice" aria-labelledby="voice-title">
+  <div class="container">
+    <SectionHead
+      eyebrow="Voice logging"
+      title={voice.heading}
+      lead={voice.subheading}
+      align="center"
+      id="voice-title"
+    />
+
+    <div class="voice">
+      <div class="voice__copy" data-reveal>
+        <ul class="phrases">
+          {
+            voice.phrases.map((phrase) => (
+              <li class="phrase">
+                <span class="phrase__mic" aria-hidden="true">
+                  <Icon name="mic" size={16} />
+                </span>
+                <span class="phrase__said">{phrase.said}</span>
+                <span class="phrase__logged">
+                  <Icon name="arrowRight" size={14} />
+                  {phrase.logged}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <ul class="points">
+          {
+            voice.points.map((point) => (
+              <li class="point">
+                <span class="card__icon point__icon">
+                  <Icon name={point.icon} size={19} />
+                </span>
+                <div>
+                  <h3 class="h4">{point.title}</h3>
+                  <p class="muted point__body">{point.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="voice__shot" data-reveal>
+        <DeviceFrame
+          device="iphone"
+          src={voice.screenshot}
+          alt="An active RepBud workout with the microphone button under the set list"
+          label="[Screenshot: Active workout]"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .voice {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .voice {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-2xl);
+    }
+  }
+
+  /* Spoken phrase → logged result ------------------------------------------ */
+  .phrases {
+    display: grid;
+    gap: var(--space-xs);
+    margin: 0 0 var(--space-l);
+    padding: 0;
+    list-style: none;
+  }
+
+  .phrase {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    padding: var(--space-s) var(--space-m);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+  }
+
+  .phrase__mic {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    flex: none;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--brand) 18%, transparent);
+    color: var(--brand-text);
+  }
+
+  .phrase__said {
+    font-weight: 600;
+  }
+
+  .phrase__logged {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+
+  .phrase__logged :global(svg) {
+    color: var(--brand-text);
+    flex: none;
+  }
+
+  /* Supporting points ------------------------------------------------------ */
+  .points {
+    display: grid;
+    gap: var(--space-m);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .point {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-s);
+    align-items: start;
+  }
+
+  .point__icon {
+    margin-bottom: 0;
+  }
+
+  .point__body {
+    margin-top: 0.25rem;
+    font-size: var(--step--1);
+  }
+
+  .voice__shot {
+    display: flex;
+    justify-content: center;
+  }
+</style>

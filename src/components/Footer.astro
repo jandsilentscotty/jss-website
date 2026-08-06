@@ -2,6 +2,7 @@
 import { brand, socials } from '@data/site';
 import { withBase } from '@utils/url';
 import Icon from './Icon.astro';
+import Logo from './Logo.astro';
 
 const year = new Date().getFullYear();
 
@@ -11,7 +12,7 @@ const columns = [
     items: [
       { label: 'iPhone app', href: '/#product' },
       { label: 'Apple Watch app', href: '/#product' },
-      { label: 'Get the app', href: '/#cta' },
+      { label: 'Who it is for', href: '/#who' },
     ],
   },
   {
@@ -37,7 +38,7 @@ const columns = [
     <div class="footer__top">
       <div class="footer__brand">
         <a class="logo" href={withBase('/')} aria-label={`${brand.name} — home`}>
-          <span class="logo__mark" aria-hidden="true"><Icon name="bolt" size={17} /></span>
+          <Logo size={30} />
           <span>{brand.name}</span>
         </a>
         <p class="footer__tagline">{brand.tagline}</p>
@@ -114,16 +115,6 @@ const columns = [
     font-weight: 660;
     letter-spacing: -0.02em;
     text-decoration: none;
-  }
-
-  .logo__mark {
-    display: grid;
-    place-items: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 9px;
-    background: var(--brand);
-    color: var(--brand-ink);
   }
 
   .footer__tagline {

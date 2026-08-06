@@ -71,61 +71,65 @@ const titleTop = 300 - (titleLines.length - 1) * 52;
 const descTop = titleTop + 52 + (titleLines.length - 1) * 104 + 40;
 
 const FONT =
-  "-apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+  "'Hanken Grotesk', -apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+
+/* The app mark, drawn at 64×64 — the same pulse trace as public/favicon.svg. */
+const mark = `<rect width="64" height="64" rx="15" fill="#0b0f11"/>
+    <circle cx="32" cy="32" r="19" fill="#101416"/>
+    <path d="M2 32h10l2.5-5 2.5 9 2-4h3l4-20 4.5 36 4.5-28 2.5 12 2.5-5 2 5h20"
+          fill="none" stroke="#9fd797" stroke-width="3"
+          stroke-linecap="round" stroke-linejoin="round"/>`;
 
 const og = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
     <radialGradient id="glow" cx="18%" cy="0%" r="85%">
-      <stop offset="0%" stop-color="#c6f24e" stop-opacity="0.26"/>
-      <stop offset="100%" stop-color="#c6f24e" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#9fd797" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#9fd797" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#c6f24e" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#4de3c1" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#9fd797" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#c0c7d5" stop-opacity="0"/>
     </linearGradient>
   </defs>
 
-  <rect width="${W}" height="${H}" fill="#08090a"/>
+  <rect width="${W}" height="${H}" fill="#101416"/>
   <rect width="${W}" height="${H}" fill="url(#glow)"/>
   <rect x="0" y="${H - 8}" width="${W}" height="8" fill="url(#rule)"/>
 
   <!-- brand mark -->
   <g transform="translate(${PAD} 78)">
-    <rect width="64" height="64" rx="16" fill="#c6f24e"/>
-    <g transform="translate(0 0) scale(1)">
-      <path d="M36.5 8 20 32.8h13.2l-2.4 23.2 18-27.4H35.3L36.5 8Z" fill="#0b1002"/>
-    </g>
-    <text x="86" y="42" font-family="${FONT}" font-size="27" font-weight="600" fill="#f3f6f7">
+    ${mark}
+    <text x="86" y="42" font-family="${FONT}" font-size="27" font-weight="600" fill="#e0e3e6">
       ${escape(brandName)}
     </text>
   </g>
 
   <text font-family="${FONT}" font-size="92" font-weight="700" letter-spacing="-3"
-        fill="#ffffff" y="${titleTop}">${titleSvg}</text>
+        fill="#e0e3e6" y="${titleTop}">${titleSvg}</text>
 
   <text font-family="${FONT}" font-size="32" font-weight="400"
-        fill="#a3adb5" y="${descTop}">${descSvg}</text>
+        fill="#c5c6cc" y="${descTop}">${descSvg}</text>
 
   <g transform="translate(${PAD} ${H - 96})" font-family="${FONT}" font-size="25" font-weight="600">
-    <rect width="14" height="14" rx="7" fill="#c6f24e" y="4"/>
-    <text x="30" y="17" fill="#c6f24e">iPhone</text>
-    <text x="132" y="17" fill="#4b545c">•</text>
-    <text x="158" y="17" fill="#c6f24e">Apple Watch</text>
-    <text x="324" y="17" fill="#4b545c">•</text>
-    <text x="350" y="17" fill="#8d979f">Built by ${escape(brandName)}</text>
+    <rect width="14" height="14" rx="7" fill="#9fd797" y="4"/>
+    <text x="30" y="17" fill="#9fd797">iPhone</text>
+    <text x="132" y="17" fill="#8f9096">•</text>
+    <text x="158" y="17" fill="#9fd797">Apple Watch</text>
+    <text x="324" y="17" fill="#8f9096">•</text>
+    <text x="350" y="17" fill="#8f9096">Built by ${escape(brandName)}</text>
   </g>
-</svg>`;
-
-const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#c6f24e"/>
-  <path d="M36.5 8 20 32.8h13.2l-2.4 23.2 18-27.4H35.3L36.5 8Z" fill="#0b1002"/>
 </svg>`;
 
 mkdirSync(join(root, 'public/images'), { recursive: true });
 
 writeFileSync(join(root, 'public/images/og-image.svg'), og);
 await sharp(Buffer.from(og)).png().toFile(join(root, 'public/images/og-image.png'));
-await sharp(Buffer.from(icon)).png().toFile(join(root, 'public/apple-touch-icon.png'));
+
+/* The touch icon is the real app icon, not a redraw of it. */
+await sharp(join(root, 'public/images/app-icon-dark.png'))
+  .resize(180, 180)
+  .png()
+  .toFile(join(root, 'public/apple-touch-icon.png'));
 
 console.log('✓ public/images/og-image.png  (1200×630)');
 console.log('✓ public/apple-touch-icon.png (180×180)');

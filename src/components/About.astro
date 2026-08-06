@@ -69,18 +69,22 @@ import Icon from './Icon.astro';
 <style>
   .about {
     display: grid;
-    gap: var(--space-xl);
+    gap: var(--space-l);
     align-items: start;
   }
 
-  @media (min-width: 860px) {
-    .about {
-      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-      gap: var(--space-2xl);
-    }
+  /* Narrow screens have one column, where a full-width portrait would be a
+     huge square sitting on top of the prose. It pairs up with its facts
+     instead and stays thumbnail-sized. */
+  .about__media {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
   }
 
   .about__portrait {
+    flex: none;
+    width: 128px;
     aspect-ratio: 1;
     overflow: hidden;
     border: 1px solid var(--line);
@@ -97,9 +101,34 @@ import Icon from './Icon.astro';
   .about__facts {
     display: grid;
     gap: 0.55rem;
-    margin: var(--space-m) 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  /* Side by side, with the portrait column sized in its own right rather than
+     taking a share of the grid — that is what kept it oversized. */
+  @media (min-width: 760px) {
+    .about {
+      grid-template-columns: minmax(0, clamp(180px, 22vw, 260px)) minmax(0, 1fr);
+      gap: var(--space-2xl);
+    }
+
+    .about__media {
+      display: block;
+    }
+
+    .about__portrait {
+      width: 100%;
+    }
+
+    .about__facts {
+      margin-top: var(--space-m);
+    }
+  }
+
+  .about__copy {
+    max-width: 68ch;
   }
 
   .about__facts li {

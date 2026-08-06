@@ -1,0 +1,64 @@
+---
+/**
+ * The app mark — the same icon that ships on the App Store.
+ * Two files rather than one so the tile always matches the surface behind it:
+ * the dark icon in dark mode, the light icon in light mode.
+ */
+import { withBase } from '@utils/url';
+
+interface Props {
+  /** Rendered edge length in px. The source art is 96×96. */
+  size?: number;
+}
+
+const { size = 30 } = Astro.props;
+---
+
+<span class="mark" style={`--mark-size:${size}px`} aria-hidden="true">
+  <img
+    class="mark__img mark__img--dark"
+    src={withBase('/images/app-icon-dark-96.png')}
+    alt=""
+    width={size}
+    height={size}
+  />
+  <img
+    class="mark__img mark__img--light"
+    src={withBase('/images/app-icon-light-96.png')}
+    alt=""
+    width={size}
+    height={size}
+  />
+</span>
+
+<style>
+  .mark {
+    display: block;
+    flex: none;
+    width: var(--mark-size);
+    height: var(--mark-size);
+  }
+
+  .mark__img {
+    display: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 23%;
+  }
+
+  /* Dark is the default, including before the theme script runs. */
+  :global(:root[data-theme='dark']) .mark__img--dark,
+  :global(:root:not([data-theme])) .mark__img--dark,
+  :global(:root[data-theme='light']) .mark__img--light {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :global(:root:not([data-theme])) .mark__img--dark {
+      display: none;
+    }
+    :global(:root:not([data-theme])) .mark__img--light {
+      display: block;
+    }
+  }
+</style>

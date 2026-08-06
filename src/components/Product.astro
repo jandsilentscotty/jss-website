@@ -135,8 +135,14 @@ import Icon from './Icon.astro';
       transition: transform 0.35s var(--ease);
     }
 
+    /* Three fanned frames have to fit their grid column, so the frames scale
+       with the viewport rather than sitting at their natural width. */
+    .product__shots--iphone > :global(.shot) {
+      --device-w: clamp(140px, 16vw, 208px);
+    }
+
     .product__shots--iphone > :global(.shot--0) {
-      transform: rotate(-5deg) translateX(14%) scale(0.92);
+      transform: rotate(-5deg) translateX(18%) scale(0.92);
       z-index: 1;
     }
 
@@ -145,20 +151,26 @@ import Icon from './Icon.astro';
     }
 
     .product__shots--iphone > :global(.shot--2) {
-      transform: rotate(5deg) translateX(-14%) scale(0.92);
+      transform: rotate(5deg) translateX(-18%) scale(0.92);
       z-index: 2;
     }
 
     .product__shots--iphone:hover > :global(.shot--0) {
-      transform: rotate(-7deg) translateX(4%) scale(0.94);
+      transform: rotate(-7deg) translateX(8%) scale(0.94);
     }
 
     .product__shots--iphone:hover > :global(.shot--2) {
-      transform: rotate(7deg) translateX(-4%) scale(0.94);
+      transform: rotate(7deg) translateX(-8%) scale(0.94);
     }
 
+    /* Three watches have to share the same column the phones do, so they
+       shrink with the viewport and step down, up, down. */
     .product__shots--watch {
-      gap: var(--space-m);
+      gap: clamp(0.25rem, 1.2vw, var(--space-m));
+    }
+
+    .product__shots--watch > :global(.shot) {
+      --device-w: clamp(112px, 13vw, 168px);
     }
 
     .product__shots--watch > :global(.shot--0) {
@@ -166,7 +178,12 @@ import Icon from './Icon.astro';
     }
 
     .product__shots--watch > :global(.shot--1) {
-      transform: rotate(4deg) translateY(12%);
+      transform: translateY(10%);
+      z-index: 1;
+    }
+
+    .product__shots--watch > :global(.shot--2) {
+      transform: rotate(4deg);
     }
   }
 </style>

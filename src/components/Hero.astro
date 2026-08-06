@@ -1,17 +1,17 @@
 ---
-import { hero, links, isPlaceholder } from '@data/site';
-import { withBase } from '@utils/url';
+import { hero } from '@data/site';
 import DeviceFrame from './DeviceFrame.astro';
+import StoreButtons from './StoreButtons.astro';
 import Icon from './Icon.astro';
 
-// Until the TestFlight link exists, the primary CTA scrolls to the signup block.
-const primaryReady = !isPlaceholder(hero.primaryCta.href);
-const primaryHref = primaryReady ? hero.primaryCta.href : withBase('/#cta');
+// The watch frame only appears once there is a real screenshot for it — an
+// empty placeholder next to a real one reads as unfinished.
+const hasWatchShot = Boolean(hero.watchScreenshot);
 
 const trust = [
+  { icon: 'mic' as const, label: 'Voice logging' },
   { icon: 'phone' as const, label: 'iPhone' },
   { icon: 'watch' as const, label: 'Apple Watch' },
-  { icon: 'offline' as const, label: 'Works offline' },
   { icon: 'heart' as const, label: 'Apple Health' },
 ];
 ---
@@ -29,23 +29,9 @@ const trust = [
       <h1 class="h1" id="hero-title">{hero.headline}</h1>
       <p class="lead hero__lead">{hero.subhead}</p>
 
-      <div class="btn-row hero__actions">
-        <a
-          class="btn btn--primary btn--lg"
-          href={primaryHref}
-          target={primaryReady ? '_blank' : undefined}
-          rel={primaryReady ? 'noopener' : undefined}
-        >
-          {hero.primaryCta.label}
-          <Icon name="arrowRight" size={19} />
-        </a>
-        <a class="btn btn--ghost btn--lg" href={hero.secondaryCta.href}>
-          <Icon name="play" size={16} />
-          {hero.secondaryCta.label}
-        </a>
+      <div class="hero__actions">
+        <StoreButtons size="lg" note={hero.ctaNote} />
       </div>
-
-      <p class="hero__note">{hero.ctaNote}</p>
 
       <ul class="hero__trust">
         {
@@ -59,23 +45,27 @@ const trust = [
       </ul>
     </div>
 
-    <div class="hero__visual">
+    <div class:list={['hero__visual', hasWatchShot && 'hero__visual--pair']}>
       <DeviceFrame
         device="iphone"
         src={hero.phoneScreenshot}
-        alt="The app's home screen on iPhone"
+        alt="RepBud's home screen on iPhone, showing the Hall of Fame and training charts"
         label="[Screenshot: iPhone home]"
         class="hero__phone"
         priority
       />
-      <DeviceFrame
-        device="watch"
-        src={hero.watchScreenshot}
-        alt="An active workout on Apple Watch"
-        label="[Screenshot: Watch]"
-        class="hero__watch"
-        priority
-      />
+      {
+        hasWatchShot && (
+          <DeviceFrame
+            device="watch"
+            src={hero.watchScreenshot}
+            alt="An active workout on Apple Watch"
+            label="[Screenshot: Watch]"
+            class="hero__watch"
+            priority
+          />
+        )
+      }
     </div>
   </div>
 </section>
@@ -122,12 +112,6 @@ const trust = [
     margin-top: var(--space-l);
   }
 
-  .hero__note {
-    margin-top: var(--space-s);
-    font-size: var(--step--1);
-    color: var(--text-faint);
-  }
-
   .hero__trust {
     display: flex;
     flex-wrap: wrap;
@@ -156,6 +140,11 @@ const trust = [
     position: relative;
     display: flex;
     justify-content: center;
+  }
+
+  /* The watch sits over the phone's bottom-right corner, so the cluster needs
+     room on that side. Phone-only heroes stay centred instead. */
+  .hero__visual--pair {
     padding-inline-end: clamp(2.5rem, 12vw, 5rem);
   }
 
@@ -167,7 +156,7 @@ const trust = [
   }
 
   @media (min-width: 960px) {
-    .hero__visual {
+    .hero__visual--pair {
       padding-inline-end: 4rem;
       justify-content: flex-end;
     }

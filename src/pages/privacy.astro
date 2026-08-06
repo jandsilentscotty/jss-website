@@ -34,21 +34,34 @@ const newsletter = !isPlaceholder(links.newsletterEndpoint);
 
         <h2>The short version</h2>
         <p>
-          {brand.appName} stores your training data on your device and in your own iCloud account.
-          We do not sell personal data, and we do not run advertising.
+          {brand.appName} keeps your training data on your device and syncs it to your own account
+          so it follows you between iPhone and Apple Watch. We do not sell personal data, we do not
+          run advertising, and we do not use third-party analytics.
         </p>
 
         <h2>Information the app collects</h2>
         <ul>
           <li>
-            <strong>Training data</strong> — workouts, sets, exercises and notes you enter. Stored
-            locally on your device and synced through your private iCloud container. We cannot read
-            it.
+            <strong>Account</strong> — an email address and password, or the identifier Apple
+            returns from Sign in with Apple. This exists so your history can reach your other
+            device; it is not used for marketing.
           </li>
           <li>
-            <strong>Health data</strong> — if you grant permission, the app reads and writes
-            workout data through Apple HealthKit. Health data is never transmitted off your device
-            by us and is never used for advertising.
+            <strong>Training data</strong> — workouts, sets, exercises and notes you enter. Stored
+            locally on your device and synced to our hosted database, where row-level security
+            scopes every row to the account that created it.
+          </li>
+          <li>
+            <strong>Voice</strong> — the microphone is used only while you are dictating a set. On
+            iPhone, speech is transcribed on your device by Apple's speech framework. On Apple
+            Watch, dictation is handled by the watch's own system dictation screen, so Apple's
+            privacy terms cover that step. Either way, the app never records, stores or uploads the
+            audio, and only the parsed numbers are saved.
+          </li>
+          <li>
+            <strong>Health data</strong> — if you grant permission, the app reads active energy and
+            writes completed workouts through Apple HealthKit. Health data is never used for
+            advertising and is never shared with third parties.
           </li>
           <li>
             <strong>Diagnostics</strong> — if you opt in to sharing crash reports with Apple, we may
@@ -103,8 +116,8 @@ const newsletter = !isPlaceholder(links.newsletterEndpoint);
         <p>
           You can ask us for a copy of any personal data we hold about you, ask us to correct it, or
           ask us to delete it. Email <a href={`mailto:${brand.email}`}>{brand.email}</a> and we will
-          respond within 30 days. To delete your training data, delete the app and remove its data
-          from iCloud in iOS Settings.
+          respond within 30 days. You can also delete your account and everything synced with it
+          from inside the app, and export your training history as CSV before you go.
         </p>
 
         <h2>Children</h2>
