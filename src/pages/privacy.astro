@@ -8,7 +8,7 @@ const newsletter = !isPlaceholder(links.newsletterEndpoint);
 
 <BaseLayout
   title="Privacy Policy"
-  description={`How ${brand.name} handles your data on this website and in ${brand.appName}.`}
+  description={`What ${brand.appName} collects, who we share it with, and how to get your data out or delete it.`}
 >
   <section class="section">
     <div class="container container--narrow">
@@ -18,25 +18,11 @@ const newsletter = !isPlaceholder(links.newsletterEndpoint);
         <p class="faint">Effective {legal.effectiveDate}</p>
       </header>
 
-      <div class="notice">
-        <strong>Template — review before you publish.</strong>
-        This is a starting point written for a small indie app, not legal advice. Have someone
-        qualified check it against how {brand.appName} actually behaves, and against the rules that
-        apply where your users live (GDPR, CCPA, and Apple's App Store requirements).
-      </div>
-
       <div class="prose">
+        <h2>Overview</h2>
         <p>
-          This policy explains what {brand.legalName} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) collects
-          when you use this website or {brand.appName}, why we collect it, and what you can do
-          about it.
-        </p>
-
-        <h2>The short version</h2>
-        <p>
-          {brand.appName} keeps your training data on your device and syncs it to your own account
-          so it follows you between iPhone and Apple Watch. We do not sell personal data, we do not
-          run advertising, and we do not use third-party analytics.
+          This policy explains what we collect and what we do with it. By using {brand.appName}, you
+          agree to this policy.
         </p>
 
         <h2>Information the app collects</h2>
@@ -59,13 +45,8 @@ const newsletter = !isPlaceholder(links.newsletterEndpoint);
             audio, and only the parsed numbers are saved.
           </li>
           <li>
-            <strong>Health data</strong> — if you grant permission, the app reads active energy and
-            writes completed workouts through Apple HealthKit. Health data is never used for
-            advertising and is never shared with third parties.
-          </li>
-          <li>
             <strong>Diagnostics</strong> — if you opt in to sharing crash reports with Apple, we may
-            see aggregated, anonymised crash logs through App Store Connect.
+            see aggregated, anonymised crash logs.
           </li>
         </ul>
 
@@ -105,25 +86,74 @@ const newsletter = !isPlaceholder(links.newsletterEndpoint);
           Google's privacy policy. If you never press play, no request goes to YouTube.
         </p>
 
-        <h2>What we never do</h2>
+        <h2>Who we share it with</h2>
+        <p>
+          We share information with service providers that help us operate {brand.appName},
+          including infrastructure, authentication, billing, analytics, and error monitoring.
+          Depending on the feature, those providers may include Supabase and Apple.
+        </p>
+        <p>
+          We may also share data when required by law, to protect rights or security, in connection
+          with a merger or asset sale, or at your direction.
+        </p>
+
+        <h2>Security</h2>
+        <p>
+          We use reasonable safeguards to protect your information, including encrypted connections
+          and access controls. We work to protect your data from unauthorized access, use, or
+          disclosure.
+        </p>
+
+        <h2>Keeping and deleting your data</h2>
+        <p>
+          We keep your data for as long as your account exists, because the app can't show you your
+          training history without it.
+        </p>
+
+        <div class="callout">
+          <strong>To delete your account: Settings → Account → Delete Account.</strong>
+          This permanently deletes your account, your profile, and your workouts from our servers. It
+          can't be undone.
+        </div>
+
+        <p>Two things worth knowing:</p>
         <ul>
-          <li>Sell or rent your personal information.</li>
-          <li>Share your training or health data with third parties.</li>
-          <li>Use tracking pixels or cross-site advertising cookies.</li>
+          <li>
+            Deleting your account doesn't erase the copy stored on your iPhone or Watch. To remove
+            that, delete the app.
+          </li>
+          <li>
+            When you delete a single workout in the app, we keep a marker on our servers so the
+            deletion reaches your other devices. We erase those markers after 90 days.
+          </li>
         </ul>
 
         <h2>Your rights</h2>
+        <p>You can:</p>
+        <ul>
+          <li>
+            <strong>See and export your data</strong> — Settings → Export Data gives you a CSV of
+            your workout history
+          </li>
+          <li>
+            <strong>Correct it</strong> — edit your workouts, routines, and custom exercises any time
+          </li>
+          <li><strong>Delete it</strong> — Settings → Account → Delete Account</li>
+          <li>
+            <strong>Turn off permissions</strong> — microphone, speech, and notifications can all be
+            revoked in your device settings
+          </li>
+        </ul>
         <p>
           You can ask us for a copy of any personal data we hold about you, ask us to correct it, or
           ask us to delete it. Email <a href={`mailto:${brand.email}`}>{brand.email}</a> and we will
-          respond within 30 days. You can also delete your account and everything synced with it
-          from inside the app, and export your training history as CSV before you go.
+          respond within 30 days.
         </p>
 
         <h2>Children</h2>
         <p>
-          {brand.appName} is not directed at children under 13, and we do not knowingly collect
-          personal information from them.
+          {brand.appName} isn't intended for children under 13, and we don't knowingly collect their
+          information. If you think a child has given us data, email us and we'll delete it.
         </p>
 
         <h2>Changes</h2>
@@ -143,25 +173,24 @@ const newsletter = !isPlaceholder(links.newsletterEndpoint);
 
 <style>
   .legal-head {
-    margin-bottom: var(--space-m);
+    margin-bottom: var(--space-l);
   }
 
   .legal-head > * + * {
     margin-top: var(--space-2xs);
   }
 
-  .notice {
+  .callout {
     padding: var(--space-s) var(--space-m);
-    margin-bottom: var(--space-l);
-    border: 1px dashed var(--line-strong);
+    border: 1px solid var(--line-strong);
+    border-left: 3px solid var(--brand);
     border-radius: var(--radius-m);
     background: var(--bg-soft);
-    color: var(--text-muted);
     font-size: var(--step--1);
     line-height: 1.6;
   }
 
-  .notice strong {
+  .callout strong {
     display: block;
     color: var(--text);
   }

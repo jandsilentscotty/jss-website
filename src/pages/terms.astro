@@ -5,100 +5,171 @@ import { withBase } from '@utils/url';
 ---
 
 <BaseLayout
-  title="Terms & Conditions"
-  description={`The terms that apply when you use this website or ${brand.appName}.`}
+  title="Terms of Service"
+  description={`The terms that apply when you create an account or use ${brand.appName}.`}
 >
   <section class="section">
     <div class="container container--narrow">
       <header class="legal-head">
         <p class="eyebrow">Legal</p>
-        <h1 class="h2">Terms &amp; Conditions</h1>
+        <h1 class="h2">Terms of Service</h1>
         <p class="faint">Effective {legal.effectiveDate}</p>
       </header>
 
-      <div class="notice">
-        <strong>Template — review before you publish.</strong>
-        These terms are a reasonable starting point for a small indie app, not legal advice. Have
-        them reviewed before you rely on them.
-      </div>
-
       <div class="prose">
-        <h2>1. Agreement</h2>
+        <h2>Agreement</h2>
         <p>
-          By using this website or {brand.appName} (the &ldquo;Service&rdquo;), you agree to these
-          terms. If you do not agree, please do not use the Service.
+          {brand.appName} is a workout tracking app for iPhone and Apple Watch. By creating an
+          account or using {brand.appName} (the &ldquo;Service&rdquo;), you agree to these terms. If
+          you don't agree, please don't use the Service.
         </p>
 
-        <h2>2. Licence</h2>
+        <h2>Licence</h2>
         <p>
-          {brand.legalName} grants you a personal, non-exclusive, non-transferable, revocable
-          licence to use {brand.appName} on Apple devices you own or control, in line with the
-          Apple Media Services Terms and Conditions. You may not copy, decompile, reverse-engineer
-          or redistribute the app.
+          You are granted a personal, non-exclusive, non-transferable, revocable licence to use {
+            brand.appName
+          }. You may not copy, decompile, reverse-engineer or redistribute the app.
         </p>
 
-        <h2>3. Your content</h2>
-        <p>
-          Your training data belongs to you. We claim no ownership over anything you enter into the
-          app. You are responsible for keeping your own backups; the app relies on your iCloud
-          account for sync and is not a backup service.
-        </p>
-
-        <h2>4. Acceptable use</h2>
-        <ul>
-          <li>Do not use the Service for anything unlawful.</li>
-          <li>Do not attempt to disrupt, probe or overload the Service or its infrastructure.</li>
-          <li>Do not misrepresent your affiliation with {brand.legalName}.</li>
-        </ul>
-
-        <h2>5. Health disclaimer</h2>
-        <p>
-          {brand.appName} is a training log, not a medical device and not a substitute for
-          professional advice. Nothing in the app or on this site is medical, nutritional or
-          coaching advice. Consult a qualified professional before starting or changing a training
-          programme, and stop if you experience pain or injury. You train at your own risk.
-        </p>
-
-        <h2>6. Your account</h2>
+        <h2>Your account</h2>
         <p>
           {brand.appName} requires an account — email and password, or Sign in with Apple — so your
-          training history can sync between your devices. You are responsible for keeping your
-          credentials secure and for everything logged under your account. You can delete your
-          account, and the data attached to it, from within the app.
+          training history can sync between your iPhone and Apple Watch.
         </p>
-
-        <h2>7. Subscriptions and payment</h2>
         <p>
-          {brand.appName} is free to use, with an optional auto-renewing {brand.appName} Pro
-          subscription that unlocks the detailed analytics, personal-record showcase and data
-          export. Purchases are processed by Apple and governed by your App Store account terms;
-          refunds are handled by Apple, not by us.
+          Keep your credentials to yourself. You are responsible for everything logged under your
+          account. If you think someone else got in, email{' '}
+          <a href={`mailto:${brand.email}`}>{brand.email}</a>.
         </p>
-
-        <h2>8. Third-party services</h2>
         <p>
-          The Service links to third-party platforms such as the App Store and YouTube. We are not
-          responsible for their content, availability or practices.
+          You can delete your account, and the data attached to it, from Settings → Account → Delete
+          Account. It is permanent.
         </p>
 
-        <h2>9. Warranty and liability</h2>
+        <h2>Your content</h2>
         <p>
-          The Service is provided &ldquo;as is&rdquo; without warranties of any kind, express or
-          implied. To the fullest extent permitted by law, {brand.legalName} is not liable for any
-          indirect, incidental or consequential damages, or for lost data or lost profits arising
-          from your use of the Service.
+          Your workouts, routines, custom exercises and notes are <strong>yours</strong>. We claim no
+          ownership over anything you enter into the app.
+        </p>
+        <p>
+          You give us permission to store and sync your content only so the app can work — so it
+          reaches your other device and comes back to you. That permission ends when you delete the
+          content or your account.
+        </p>
+        <p>
+          {brand.appName} syncs through your account to our servers.
+          <strong>It is not a backup service.</strong> Keep your own copy of anything that matters: Settings
+          → Export Data gives you a CSV of your workout history.
+        </p>
+        <p>{brand.appName} has no social features. Nothing you log is visible to other users.</p>
+
+        <h2>Acceptable use</h2>
+        <p>Please don't:</p>
+        <ul>
+          <li>Use the Service for anything unlawful</li>
+          <li>Try to reach anyone else's account or data</li>
+          <li>Reverse-engineer or decompile the app</li>
+          <li>Get around subscription limits or tamper with purchases</li>
+          <li>Probe, scrape, overload or disrupt the Service or its infrastructure</li>
+        </ul>
+
+        <h2>Health and safety</h2>
+
+        <div class="callout">
+          <strong>
+            {brand.appName} is a training log. It is not a medical device and gives no medical, nutritional
+            or coaching advice.
+          </strong>
+          You train at your own risk.
+        </div>
+
+        <ul>
+          <li>
+            <strong>Talk to a doctor before starting or changing a training programme</strong> —
+            especially if you have a medical condition or injury, are pregnant, or take medication.
+          </li>
+          <li>
+            Exercise can cause injury. How you train, how much you lift, and your own form and
+            safety are your responsibility. Stop and get medical help if you feel unwell or
+            experience pain.
+          </li>
+          <li>
+            Everything the app shows you — analytics, records, streaks, estimates — is derived from
+            what you entered. Don't make medical decisions from it.
+          </li>
+          <li>
+            Voice logging can mishear you, especially in a loud gym. <strong>Check what got logged.</strong>
+            You can undo a dictated set right away or edit it later.
+          </li>
+        </ul>
+
+        <h2>Subscriptions and payment</h2>
+        <p>
+          {brand.appName} is free to use, with a limit of <strong>5 routines</strong> and{' '}
+          <strong>25 custom exercises</strong>. Detailed analytics, the personal-record showcase, and
+          data export are locked on the free plan.
+        </p>
+        <p>
+          <strong>{brand.appName} Pro</strong> removes those limits and unlocks those features. It comes
+          as a monthly or annual plan, and prices are shown in the app before you buy.
+        </p>
+        <ul>
+          <li><strong>Apple handles the payment</strong>, not us. We never see your card details.</li>
+          <li>
+            <strong>Your subscription renews automatically</strong> unless you cancel at least 24 hours
+            before the period ends. Apple charges you within 24 hours of renewal.
+          </li>
+          <li>
+            <strong>To cancel</strong>, go to iOS Settings → your name → Subscriptions. Cancelling stops
+            future charges but doesn't refund the period you're in.
+          </li>
+          <li>
+            <strong>Refunds come from Apple</strong>, under Apple's policies — we usually can't issue
+            them. Ask at{' '}
+            <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">
+              reportaproblem.apple.com
+            </a>.
+          </li>
+          <li>You can restore a past purchase from Settings → Restore Purchases at any time.</li>
+        </ul>
+        <p>
+          If your subscription ends, <strong>your data stays put.</strong> Pro features lock, and anything
+          over the free limits stays in your account — you just can't add more until you're under the
+          limit or subscribe again.
         </p>
 
-        <h2>10. Changes</h2>
+        <h2>Warranty and liability</h2>
+        <p>
+          The Service is provided <strong>&ldquo;as is&rdquo;</strong>, without warranties of any
+          kind, express or implied. We don't promise it will always work, always sync, or never lose
+          data. <strong>Export your data if it matters to you.</strong>
+        </p>
+        <p>
+          To the fullest extent permitted by law, {brand.appName} and its suppliers are not liable for
+          lost data, lost profits, or any indirect, incidental or consequential damages arising from
+          your use of {brand.appName}.
+        </p>
+        <p>
+          Some places don't allow these limits, so parts of this may not apply to you. Nothing here
+          limits liability that can't legally be limited.
+        </p>
+
+        <h2>Ending things</h2>
+        <p>You can stop using {brand.appName} and delete your account at any time.</p>
+        <p>
+          We may suspend or close your account if you seriously break these terms or if we're
+          legally required to. If we shut the Service down entirely, we'll give you at least 30 days
+          to export your data.
+        </p>
+
+        <h2>Changes</h2>
         <p>
           We may update these terms. Material changes will be reflected in the effective date above,
-          and continued use of the Service after a change means you accept the updated terms.
+          and we'll tell you in the app or by email first. Continued use of the Service after a
+          change means you accept the updated terms.
         </p>
 
-        <h2>11. Governing law</h2>
-        <p>These terms are governed by the laws of {legal.jurisdiction}.</p>
-
-        <h2>12. Contact</h2>
+        <h2>Contact</h2>
         <p>
           Questions about these terms: <a href={`mailto:${brand.email}`}>{brand.email}</a>. See also
           our <a href={withBase('/privacy')}>Privacy Policy</a>.
@@ -110,26 +181,26 @@ import { withBase } from '@utils/url';
 
 <style>
   .legal-head {
-    margin-bottom: var(--space-m);
+    margin-bottom: var(--space-l);
   }
 
   .legal-head > * + * {
     margin-top: var(--space-2xs);
   }
 
-  .notice {
+  .callout {
     padding: var(--space-s) var(--space-m);
-    margin-bottom: var(--space-l);
-    border: 1px dashed var(--line-strong);
+    border: 1px solid var(--line-strong);
+    border-left: 3px solid var(--brand);
     border-radius: var(--radius-m);
     background: var(--bg-soft);
-    color: var(--text-muted);
     font-size: var(--step--1);
     line-height: 1.6;
   }
 
-  .notice strong {
+  .callout strong {
     display: block;
     color: var(--text);
+    margin-bottom: 0.4em;
   }
 </style>

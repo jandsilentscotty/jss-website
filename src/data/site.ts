@@ -23,7 +23,7 @@ export const brand = {
   /** Six words max. Sits under the logo in the footer. */
   tagline: 'Say the set. It is logged.',
   /** Used for the copyright line and legal pages. */
-  legalName: '[Company/Legal Name]',
+  legalName: 'RepBud',
   email: 'jandsilentscotty@gmail.com',
 } as const;
 
@@ -280,9 +280,12 @@ export const contact = {
 
 /* ─── 12. LEGAL ─────────────────────────────────────────────────────────── */
 
+/* The canonical text lives in the RepBud repo at docs/legal/. Edit it there
+   first, then mirror the change into src/pages/privacy.astro + terms.astro and
+   bump the date below. */
+
 export const legal = {
-  effectiveDate: '[Effective Date]',
-  jurisdiction: '[Jurisdiction — e.g. the State of New York, USA]',
+  effectiveDate: 'Friday August 7, 2026',
   /** Set to '' if you never add analytics — the privacy page adapts. */
   analyticsProvider: '[Analytics provider — e.g. Plausible, or leave blank if none]',
 } as const;
