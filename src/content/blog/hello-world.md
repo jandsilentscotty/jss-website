@@ -1,5 +1,5 @@
 ---
-title: 'Why I am building RepBud'
+title: 'Why I am building HatawSet'
 description: 'The spreadsheet finally broke. Here is what I decided to build instead, and who it is for.'
 pubDate: 2026-01-15
 category: 'Launch notes'
@@ -25,7 +25,7 @@ What I wanted was narrow:
 - Let me log a set without taking my phone out of my bag
 - Add up the volume so I do not have to
 
-That is the whole product. RepBud does those three things and tries very hard not to do a
+That is the whole product. HatawSet does those three things and tries very hard not to do a
 fourth.
 
 ## Who it is not for

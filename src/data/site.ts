@@ -19,11 +19,11 @@ export const brand = {
   /** Short form used in tight spaces (mobile header, favicon-adjacent marks). */
   shortName: 'J&SS',
   /** The app this site is selling. */
-  appName: 'RepBud',
+  appName: 'HatawSet',
   /** Six words max. Sits under the logo in the footer. */
   tagline: 'Say the set. It is logged.',
   /** Used for the copyright line and legal pages. */
-  legalName: 'RepBud',
+  legalName: 'HatawSet',
   email: 'jandsilentscotty@gmail.com',
 } as const;
 
@@ -34,7 +34,7 @@ export const seo = {
   defaultTitle: `${brand.appName} — Log every set by voice`,
   /** 150–160 chars. This is your Google search snippet. Make it a sales line. */
   defaultDescription:
-    'RepBud is the iPhone and Apple Watch training log you can talk to. Say “185 for 8” between sets and it is logged — on device, no typing, no phone juggling.',
+    'HatawSet is the iPhone and Apple Watch training log you can talk to. Say “185 for 8” between sets and it is logged — on device, no typing, no phone juggling.',
   /** Social preview image (1200×630). Regenerate with: npm run og */
   ogImage: '/images/og-image.png',
   /** Twitter/X handle for the summary card attribution. */
@@ -116,12 +116,12 @@ export const hero = {
   /** Small pill above the headline. Great spot for launch status. */
   eyebrow: 'Coming to the App Store',
   /** ONE sentence. What it is, who it's for. Not a slogan — a statement. */
-  headline: 'Say the set. RepBud logs it.',
+  headline: 'Say the set. HatawSet logs it.',
   /** 1–2 sentences. Name the person and the problem you remove. */
   subhead:
-    'RepBud is a strength training log for iPhone and Apple Watch. Say “185 for 8” between sets and it lands on the right exercise — weight, reps, time or distance, all transcribed on your device.',
+    'HatawSet is a strength training log for iPhone and Apple Watch. Say “185 for 8” between sets and it lands on the right exercise — weight, reps, time or distance, all transcribed on your device.',
   /** Small reassurance line under the buttons. */
-  ctaNote: 'iPhone + Apple Watch · Free to start · RepBud Pro unlocks the deep analytics',
+  ctaNote: 'iPhone + Apple Watch · Free to start · HatawSet Pro unlocks the deep analytics',
   /** Hero screenshots. Empty string → labelled placeholder frame. */
   phoneScreenshot: '/images/screenshots/ios-home.png',
   watchScreenshot: '/images/screenshots/watch-active-set.png',
@@ -136,7 +136,7 @@ export const positioning = {
   audience: [
     {
       title: 'You hate typing between sets',
-      body: 'Tap the mic, say the set, put the phone down. RepBud understands your workout details, converts measurements when needed, and lets you quickly undo a mistake if it hears you incorrectly.',
+      body: 'Tap the mic, say the set, put the phone down. HatawSet understands your workout details, converts measurements when needed, and lets you quickly undo a mistake if it hears you incorrectly.',
     },
     {
       title: 'You lift 3–6 days a week',
@@ -198,7 +198,7 @@ export const products = [
 export const voice = {
   heading: 'Say the set. Keep your hands on the bar.',
   subheading:
-    'Tap the mic on any exercise and talk to RepBud the way you would talk to a training partner. Speech is transcribed on your device — nothing is shipped off to a server to be understood.',
+    'Tap the mic on any exercise and talk to HatawSet the way you would talk to a training partner. Speech is transcribed on your device — nothing is shipped off to a server to be understood.',
   /** Real phrasings the parser understands. */
   phrases: [
     { said: '“185 for 8”', logged: '185 lbs × 8 reps' },
@@ -237,10 +237,10 @@ export const about = {
   /** Each string is its own paragraph. */
   paragraphs: [
     'I’m J. One half of J and Silent Scotty, where motivation meets the journey. We create engaging workout vlogs to inspire you to chase your next personal best, whether you’re training in the gym, working out at home, or just getting started.',
-    'Along the way, we openly share our fitness plans, training routines, evolving goals, and the everyday work behind getting stronger. We built RepBud to make that journey easier to track.',
-    'Logging a workout should not interrupt it. RepBud lets you record a set quickly by voice, so you can stay focused and keep moving instead of stopping to type everything into a spreadsheet or search through a complicated app. Its simple statistics also help you see your progress, recognize your growth, and stay motivated toward your next goal.',
-    'RepBud is built by one person who uses it every session. That keeps it focused, fast, and practical. Every feature has to earn its place by making training easier to log and progress easier to understand.',
-    'We believe fitness is a journey best taken together. When we’re not lifting, you can find us unwinding with some chill gaming content, but wherever we are, RepBud helps us keep showing up, tracking the work, and moving forward.',
+    'Along the way, we openly share our fitness plans, training routines, evolving goals, and the everyday work behind getting stronger. We built HatawSet to make that journey easier to track.',
+    'Logging a workout should not interrupt it. HatawSet lets you record a set quickly by voice, so you can stay focused and keep moving instead of stopping to type everything into a spreadsheet or search through a complicated app. Its simple statistics also help you see your progress, recognize your growth, and stay motivated toward your next goal.',
+    'HatawSet is built by one person who uses it every session. That keeps it focused, fast, and practical. Every feature has to earn its place by making training easier to log and progress easier to understand.',
+    'We believe fitness is a journey best taken together. When we’re not lifting, you can find us unwinding with some chill gaming content, but wherever we are, HatawSet helps us keep showing up, tracking the work, and moving forward.',
   ],
   /** Short credibility bullets. Keep them concrete. */
   facts: ['100 subscribers on YouTube'],
@@ -253,7 +253,7 @@ export const about = {
 export const youtube = {
   heading: 'Watch the build',
   subheading:
-    'Training sessions, gaming nights and the occasional look behind the scenes of building RepBud.',
+    'Training sessions, gaming nights and the occasional look behind the scenes of building HatawSet.',
   channelUrl: 'https://www.youtube.com/@JnSilentScotty?sub_confirmation=1',
   channelHandle: '@JnSilentScotty',
   videos: [
@@ -280,7 +280,7 @@ export const contact = {
 
 /* ─── 12. LEGAL ─────────────────────────────────────────────────────────── */
 
-/* The canonical text lives in the RepBud repo at docs/legal/. Edit it there
+/* The canonical text lives in the HatawSet repo at docs/legal/. Edit it there
    first, then mirror the change into src/pages/privacy.astro + terms.astro and
    bump the date below. */
 

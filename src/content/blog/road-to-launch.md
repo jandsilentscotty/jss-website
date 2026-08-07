@@ -1,6 +1,6 @@
 ---
 title: 'The road to launch'
-description: 'What is finished in RepBud, what is still moving, and what has to be true before it goes on the App Store.'
+description: 'What is finished in HatawSet, what is still moving, and what has to be true before it goes on the App Store.'
 pubDate: 2026-03-02
 category: 'Release'
 author: '[Your Name]'
@@ -9,7 +9,7 @@ draft: false
 
 > Swap this for your real launch update.
 
-There is no public beta. RepBud goes out when it is a 1.0 I would hand to a friend at the gym —
+There is no public beta. HatawSet goes out when it is a 1.0 I would hand to a friend at the gym —
 so here is exactly where it stands.
 
 ## Where the build is
